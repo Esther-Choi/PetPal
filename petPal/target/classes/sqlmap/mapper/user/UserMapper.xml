@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user.dao.UserDAO">
+
+	<insert id="insertUser" parameterType="userVO">
+		INSERT INTO HR.TBL_USER
+		(USER_ID, 
+		USER_PW, 
+		USER_NAME, 
+		USER_GENDER, 
+		USER_BIRTH, 
+		WALK_DAY, 
+		WALK_TIME, 
+		WALK_HOUR, 
+		WALK_MINUTE, 
+		WALK_PLACE1, 
+		WALK_PLACE2, 
+		WALK_STYLE)
+		VALUES(
+		#{user_id}, 
+		#{user_pw}, 
+		#{user_name}, 
+		#{user_gender}, 
+		#{user_birth}, 
+		#{walk_day}, 
+		#{walk_time}, 
+		#{walk_hour}, 
+		#{walk_minute], 
+		#{walk_place1}, 
+		#{walk_place2}, 
+		#{walk_style});
+		
+	</insert>
+	
+	<insert id="insertPet" parameterType="petVO">
+		INSERT INTO HR.TBL_PET
+		(
+		PET_NUM, 
+		USER_ID, 
+		PET_PHOTO, 
+		PET_NAME, 
+		PET_AGE, 
+		PET_GENDER, 
+		PET_BREED, 
+		ADDRESS, 
+		PET_WEIGHT, 
+		SURGERY, 
+		LIKES, 
+		DISLIKES, 
+		CHARACTER1, 
+		CHARACTER2, 
+		CHARACTER3, 
+		TIP)
+		VALUES(
+		SEQ_PET.NEXTVAL, 
+		#{user_id}, 
+		#{pet_photo}, 
+		#{pet_name}, 
+		#{pet_age}, 
+		#{pet_gender}, 
+		#{pet_breed}, 
+		#{address}, 
+		#{pet_weight}, 
+		#{surgery}, 
+		#{likes}, 
+		#{dislikes}, 
+		#{character1}, 
+		#{character2}, 
+		#{character3}, 
+		#{tip});
+		
+	</insert>
+
+</mapper>

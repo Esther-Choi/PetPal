@@ -1,0 +1,91 @@
+.bold {
+    color: black;
+}
+
+.fa-cog {
+    color: black;
+}
+
+.profile {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.profile img {
+    width: 5.2em;
+    border-radius: 50%;
+    border: solid 1px #e6e6e6;
+}
+
+.profile div {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.profile #nickname {
+    color: black;
+    font-size: 0.95em;
+    margin-bottom: 2.5px;
+}
+
+.profile #viewProfile {
+    text-decoration: none;
+    color: #bfbfbf;
+    font-size: 0.65em;
+    border: solid 0.193em #cccccc;
+    border-radius: 20px;
+    padding: 0px 8px;
+    height: 2.1em;
+    display: flex;
+    align-items: center;
+}
+
+.mypage {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.mypage ul {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    list-style: none;
+}
+
+.mypage ul li {
+    border-top: solid 1.5px rgb(191, 191, 191, 0.2);
+    padding: 0.8em 0;
+}
+
+.mypage ul a {
+    text-decoration: none;
+    color: black;
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mypage ul a i {
+    font-size: 1.4em;
+    margin-right: 7px;
+    color: #737373;
+}
+
+.color {
+    color: #ffa64d !important;
+}
+
+.mypage ul a div {
+    display: flex;
+    align-items: center;
+}
+
+.mypage ul a #count {
+    color: #cccccc;
+    margin-right: 12px;
+}
