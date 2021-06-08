@@ -13,9 +13,9 @@ public class UserService {
 	@Autowired
 	private UserDAO userDAO;
 	
-	public boolean join(UserVO user, PetVO pet) throws Exception{
+	public boolean join(UserVO userVO, PetVO petVO) throws Exception{
 		
-		if(userDAO.insertUser(user) == 1 && userDAO.insertPet(pet) == 1) {
+		if(userDAO.insertUser(userVO) == 1 && userDAO.insertPet(petVO) == 1) {
 			return true;
 		}else {
 			return false;

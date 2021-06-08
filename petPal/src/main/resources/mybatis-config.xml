@@ -4,11 +4,20 @@
     "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+	 <settings>
+
+        <setting name="cacheEnabled" value="false" />
+        <setting name="jdbcTypeForNull" value="NULL" />
+
+    </settings>
+
  	<typeAliases>
     
 		<typeAlias type="com.petpal.user.vo.UserVO" alias="userVO"/>
 		<typeAlias type="com.petpal.user.vo.PetVO" alias="petVO"/>
 		
     </typeAliases>
+    
+    
 
 </configuration>

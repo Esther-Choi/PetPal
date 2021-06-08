@@ -27,10 +27,10 @@
 		#{walk_day}, 
 		#{walk_time}, 
 		#{walk_hour}, 
-		#{walk_minute], 
+		#{walk_minute}, 
 		#{walk_place1}, 
 		#{walk_place2}, 
-		#{walk_style});
+		#{walk_style})
 		
 	</insert>
 	
@@ -69,7 +69,7 @@
 		#{character1}, 
 		#{character2}, 
 		#{character3}, 
-		#{tip});
+		#{tip})
 		
 	</insert>
 

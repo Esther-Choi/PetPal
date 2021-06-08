@@ -9,7 +9,7 @@ public class PetVO {
 	private String pet_gender;
 	private String pet_breed;
 	private String address;
-	private int pet_weight;
+	private String pet_weight;
 	private String surgery;
 	private String likes;
 	private String dislikes;
@@ -61,10 +61,10 @@ public class PetVO {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public int getPet_weight() {
+	public String getPet_weight() {
 		return pet_weight;
 	}
-	public void setPet_weight(int pet_weight) {
+	public void setPet_weight(String pet_weight) {
 		this.pet_weight = pet_weight;
 	}
 	public String getSurgery() {

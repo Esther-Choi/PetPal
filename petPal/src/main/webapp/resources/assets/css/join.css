@@ -241,6 +241,7 @@ select:focus, input:focus {
     border-radius: 5px;
     border: solid 1.8px #bfbfbf;
     font-size: 0.8em;
+    background-color: white !important;
 }
 
 #style-box textarea:focus{

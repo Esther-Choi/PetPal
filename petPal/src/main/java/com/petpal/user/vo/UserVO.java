@@ -12,8 +12,8 @@ public class UserVO {
 	private String user_birth;
 	private String walk_day;
 	private String walk_time;
-	private int walk_hour;
-	private int walk_minute;
+	private String walk_hour;
+	private String walk_minute;
 	private String walk_place1;
 	private String walk_place2;
 	private String walk_style;
@@ -61,16 +61,16 @@ public class UserVO {
 	public void setWalk_time(String walk_time) {
 		this.walk_time = walk_time;
 	}
-	public int getWalk_hour() {
+	public String getWalk_hour() {
 		return walk_hour;
 	}
-	public void setWalk_hour(int walk_hour) {
+	public void setWalk_hour(String walk_hour) {
 		this.walk_hour = walk_hour;
 	}
-	public int getWalk_minute() {
+	public String getWalk_minute() {
 		return walk_minute;
 	}
-	public void setWalk_minute(int walk_minute) {
+	public void setWalk_minute(String walk_minute) {
 		this.walk_minute = walk_minute;
 	}
 	public String getWalk_place1() {

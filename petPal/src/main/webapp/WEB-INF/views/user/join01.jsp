@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -22,9 +23,9 @@
             <p>회원가입</p>
             <a href="main.html"><i class="fas fa-times"></i></a>
         </div>
-        <form id="frm" name="frm" method="post" action="/user/join02.do">
         
         <div id="input">
+        <form id="frm" name="frm" method="post" action="/user/join02.do">
             <p id="info">집사 정보</p>
             <div id="id-box">
                 <input id="id" name="user_id" type="text" placeholder="아이디">
@@ -33,7 +34,7 @@
             <input name="user_pw" type="text" placeholder="비밀번호">
             <input type="text" placeholder="비밀번호 확인">
             <div id="id-box">
-                <input id="id" type="text" placeholder="닉네임">
+                <input name="user_name" id="id" type="text" placeholder="닉네임">
                 <a href=""><span>중복확인</span> </a>
             </div>
             <div id="birth-box">
@@ -45,6 +46,7 @@
                 <div>
                     <button type="button" id="gender" onclick="selectGender(this)" value="여자">여자</button>
                     <button type="button" onclick="selectGender(this)" value="남자">남자</button>
+                    <input type="hidden" name="user_gender">
                 </div>
             </div>
             <div id="day-box">
@@ -57,6 +59,7 @@
                     <button type="button" onclick="selectDay(this)" value="금">금</button>
                     <button type="button" onclick="selectDay(this)" value="토">토</button>
                     <button type="button" onclick="selectDay(this)" value="일">일</button>
+                    <input type="hidden" name="walk_day">
                 </div>
             </div>
             <div id="time-box">
@@ -68,6 +71,7 @@
                 <div>
                     <button type="button" id="ma" onclick="selectMA(this)" value="오전">오전</button>
                     <button type="button" onclick="selectMA(this)" value="오후">오후</button>
+                    <input type="hidden" name="walk_time">
                 </div>
                 <select name="walk_hour" id="hr">
                     <option value="">시</option>
@@ -87,8 +91,8 @@
                 <span style="font-size: 0.8em;">&nbsp;: &nbsp;</span>
                 <select name="walk_minute" id="mn">
                     <option value="분">분</option>
-                    <option value="morning">00</option>
-                    <option value="afternoon">30</option>
+                    <option value="00">00</option>
+                    <option value="30">30</option>
                     
                 </select>
             </div>
@@ -103,14 +107,12 @@
                 <span>산책 스타일</span>
                 <textarea name="walk_style" id="style" placeholder="평소 산책 스타일을 적어주세요!"></textarea>
             </div>
-            </form>
             <div id="submit-btn">
                 <a href="javascript:void(0)" onclick="submit()" ><span>다음</span></a>
             </div>
+            </form>
+            </div>
         </div>
-        
-        
-    </div>
 
     <!-- Scripts -->
 			<script src="${path}/resources/assets/js/jquery.min.js"></script>
@@ -122,6 +124,11 @@
 <script>   
 
 	function submit(){
+		
+		$("input[name='user_gender']").val($("#gender").val());
+		$("input[name='walk_day']").val($(".day").val());
+		$("input[name='walk_time']").val($("#ma").val());
+		
 		frm.submit();
 	}
 
@@ -132,7 +139,6 @@
 
     function selectDay(e) {
         if($(e).attr("class") == "day"){
-            console.log($(".day").length);
             if($(".day").length == 1){
                 alert("최소 한개는 선택해야합니다.")
             }else {

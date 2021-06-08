@@ -13,12 +13,14 @@ public class UserDAO {
 	@Autowired
 	private SqlSessionTemplate sql;
 	
-	public int insertUser(UserVO user) {
-		return sql.insert("insertUser", user);
+	 private static final String namespace = "user.dao.UserDAO";
+	
+	public int insertUser(UserVO userVO) {
+		return sql.insert(namespace + ".insertUser", userVO);
 	}
 	
-	public int insertPet(PetVO pet) {
-		return sql.insert("insertPet", pet);
+	public int insertPet(PetVO petVO) {
+		return sql.insert(namespace + ".insertPet", petVO);
 	}
 
 }
