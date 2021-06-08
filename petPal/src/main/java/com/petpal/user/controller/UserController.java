@@ -1,5 +1,7 @@
 package com.petpal.user.controller;
 
+import java.util.Arrays;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.petpal.user.service.UserService;
 import com.petpal.user.vo.PetVO;
@@ -39,7 +42,8 @@ public class UserController {
 			Model model,
 			HttpServletRequest request,
 			HttpServletResponse response,
-			UserVO user
+			UserVO user,
+			@RequestParam(value="walk_day") String[] days
 			) throws Exception {
 		
 			LOGGER.info(user.getUser_gender());
@@ -52,6 +56,7 @@ public class UserController {
 			LOGGER.info(user.getWalk_minute());
 			LOGGER.info(user.getWalk_place1());
 			LOGGER.info(user.getWalk_style());
+			userVO.setWalk_day(Arrays.toString(days));
 		
 			model.addAttribute("userVO", userVO);
 		

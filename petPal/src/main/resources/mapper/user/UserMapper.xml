@@ -23,7 +23,7 @@
 		#{user_pw}, 
 		#{user_name}, 
 		#{user_gender}, 
-		#{user_birth}, 
+		TO_DATE(#{user_birth}, 'YYYY-MM-DD'), 
 		#{walk_day}, 
 		#{walk_time}, 
 		#{walk_hour}, 

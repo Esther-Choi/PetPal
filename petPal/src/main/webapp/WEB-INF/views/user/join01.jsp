@@ -125,8 +125,14 @@
 
 	function submit(){
 		
+		var dayArr = new Array();
+		$(".day").each(function(index, item){
+			dayArr.push($(item).val());
+		});
+		
+		
 		$("input[name='user_gender']").val($("#gender").val());
-		$("input[name='walk_day']").val($(".day").val());
+		$("input[name='walk_day']").val(dayArr);
 		$("input[name='walk_time']").val($("#ma").val());
 		
 		frm.submit();
