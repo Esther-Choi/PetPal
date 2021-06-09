@@ -21,7 +21,7 @@
     <div id="wrapper">
         <div id="top">
             <p>회원가입</p>
-            <a href="main.html"><i class="fas fa-times"></i></a>
+            <a href="/user/main.do"><i class="fas fa-times"></i></a>
         </div>
         <div id="input">
         	<form name="frm" action="/user/join.do" method="post" >
@@ -48,7 +48,7 @@
             </div>
             <div id="birth-box">
                 <span id="birth-span">나이</span>
-                <input name="pet_age" type="text" placeholder="">
+                <input name="pet_age" type="number" placeholder="">
             </div>
             <div id="gender-box">
                 <span>성별</span>
@@ -118,7 +118,7 @@
                     <input type="hidden" name="surgery">
                 </div>
                 <span id="birth-span" style="width: 45px;">몸무게</span>
-                <input name="pet_weight" type="text" id="weight">
+                <input name="pet_weight" type="number" id="weight">
                 <span style="font-size: 0.8em; margin-left: 5px;">kg</span>
             </div>
             <div id="style-box">
@@ -140,6 +140,8 @@
                     <button type="button" onclick="Days(this)" value="아싸">아싸</button>
                     <button type="button" onclick="Days(this)" value="난폭">난폭</button>
                     <input type="hidden" name="character1">
+                    <input type="hidden" name="character2">
+                    <input type="hidden" name="character3">
                 </div>
             </div>
             <div id="style-box">
@@ -168,11 +170,25 @@
 
 	$(document).ready(function(){
 		
-		submitForm = function(){
+		submitForm = function(){			
+			
+
+			if($("input[name='pet_name']").val() == "" || $("input[name='pet_aeg']").val() == "" || 
+				 	$("input[name='pet_breed']").val() == "" || 
+					$("input[name='address']").val() == "" ||
+					$("input[name='pet_weight']").val() == "" ||  $("input[name='likes']").val() == "" ||
+					$("input[name='dislikes']").val() == "" ||  $("input[name='tip']").val() == ""){
+				alert("빈칸을 모두 입력해주세요!");
+				return false;
+			} 
+			
+			$(".character").each(function(index, item){
+				$("input[name='character"+(index+1)+"']").val($(item).val());
+			});
+			
 			
 			$("input[name='pet_gender']").val($("#gender").val());
 			$("input[name='surgery']").val($("#ma").val());
-			$("input[name='character1']").val($(".character").val());
 			
 			frm.submit();
 		}
@@ -181,10 +197,17 @@
 		    $("#gender").attr("id", "");
 		    $(e).attr("id", "gender");
 		}
-	
+		
+		var cnt = 0;
 		Days = function(e) {
 	        if($(e).attr("class") == "character"){
-	            $(e).attr("class", "");
+	        	  if($(".character").length == 1){
+		            	alert("최소 한개는 선택해야합니다.")
+		            }else {
+		            	
+			            $(e).attr("class", "");
+		            }
+	            
 	        }else {
 	            if($(".character").length > 2){
 	                alert("최대 3개까지 선택 가능합니다.")

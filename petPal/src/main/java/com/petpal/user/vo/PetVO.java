@@ -19,6 +19,15 @@ public class PetVO {
 	private String tip;
 	
 	
+	
+	@Override
+	public String toString() {
+		return "PetVO [user_id=" + user_id + ", pet_photo=" + pet_photo + ", pet_name=" + pet_name + ", pet_age="
+				+ pet_age + ", pet_gender=" + pet_gender + ", pet_breed=" + pet_breed + ", address=" + address
+				+ ", pet_weight=" + pet_weight + ", surgery=" + surgery + ", likes=" + likes + ", dislikes=" + dislikes
+				+ ", character1=" + character1 + ", character2=" + character2 + ", character3=" + character3 + ", tip="
+				+ tip + "]";
+	}
 	public String getUser_id() {
 		return user_id;
 	}

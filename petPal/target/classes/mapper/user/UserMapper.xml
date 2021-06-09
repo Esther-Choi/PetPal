@@ -72,5 +72,17 @@
 		#{tip})
 		
 	</insert>
+	
+	<select id="checkId" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM TBL_USER WHERE USER_ID = #{user_id}
+	</select>
+	
+	<select id="checkNickname" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM TBL_USER WHERE USER_NAME = #{user_name}
+	</select>
+	
+	<select id="login" parameterType="string" resultType="userVO">
+		SELECT USER_ID, USER_PW FROM TBL_USER WHERE USER_ID = #{user_id}
+	</select>
 
 </mapper>

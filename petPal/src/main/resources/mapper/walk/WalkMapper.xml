@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="walk.dao.WalkDAO">
+	
+		<insert id="insertWalk" parameterType="walkVO">
+			INSERT INTO HR.TBL_WALK
+			(NUM, 
+			USER_ID, 
+			TITLE, 
+			LOCATION, 
+			"DATE", 
+			WALK_TIME, 
+			WALK_HOUR, 
+			WALK_MINUTE, 
+			CONTENT)
+			VALUES(
+			SEQ_WALK.NEXTVAL, 
+			#{user_id}, 
+			#{title}, 
+			#{location}, 
+			#{date}, 
+			#{walk_time}, 
+			#{walk_hour}, 
+			#{walk_minute}, 
+			#{content})
+			
+		</insert>
+	
+	</mapper>

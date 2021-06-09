@@ -1,6 +1,7 @@
 package com.petpal.user.vo;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 public class UserVO {
@@ -18,6 +19,14 @@ public class UserVO {
 	private String walk_place2;
 	private String walk_style;
 	
+	
+	@Override
+	public String toString() {
+		return "UserVO [user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name + ", user_gender="
+				+ user_gender + ", user_birth=" + user_birth + ", walk_day=" + walk_day + ", walk_time=" + walk_time
+				+ ", walk_hour=" + walk_hour + ", walk_minute=" + walk_minute + ", walk_place1=" + walk_place1
+				+ ", walk_place2=" + walk_place2 + ", walk_style=" + walk_style + "]";
+	}
 	
 	public String getUser_id() {
 		return user_id;

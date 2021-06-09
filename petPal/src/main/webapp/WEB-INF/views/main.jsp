@@ -78,7 +78,7 @@
         </div>
         <div id="buttons">
             <a href="/user/join01.do" id="join">펫팔 가입하기</a>
-            <a href="login.html" id="login">로그인하기</a>
+            <a href="/user/login.do" id="login">로그인하기</a>
         </div>
     </div>
 
