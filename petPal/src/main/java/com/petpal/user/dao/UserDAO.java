@@ -1,7 +1,5 @@
 package com.petpal.user.dao;
 
-import java.util.HashMap;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -35,6 +33,14 @@ public class UserDAO {
 	
 	public UserVO login(String user_id) {
 		return sql.selectOne(namespace + ".login", user_id);
+	}
+	
+	public UserVO getUser(String user_id) {
+		return sql.selectOne(namespace + ".getUser", user_id);
+	}
+	
+	public PetVO getPet(String user_id) {
+		return sql.selectOne(namespace + ".getPet", user_id);
 	}
 
 }

@@ -12,6 +12,10 @@ public class WalkVO {
 	private String walk_hour;
 	private String walk_minute;
 	private String content;
+	private String reg_date;
+	private String thumb;
+	private String age;
+	private String breed;
 	
 	@Override
 	public String toString() {
@@ -19,6 +23,55 @@ public class WalkVO {
 				+ date + ", walk_day=" + walk_time + ", walk_hour=" + walk_hour + ", walk_minute=" + walk_minute
 				+ ", content=" + content + "]";
 	}
+	
+	
+	
+	public String getAge() {
+		return age;
+	}
+
+
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+
+
+	public String getBreed() {
+		return breed;
+	}
+
+
+
+	public void setBreed(String breed) {
+		this.breed = breed;
+	}
+
+
+
+	public String getThumb() {
+		return thumb;
+	}
+
+
+
+	public void setThumb(String thumb) {
+		this.thumb = thumb;
+	}
+
+
+
+	public String getReg_date() {
+		return reg_date;
+	}
+
+
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
+	}
+
+
 	public int getNum() {
 		return num;
 	}

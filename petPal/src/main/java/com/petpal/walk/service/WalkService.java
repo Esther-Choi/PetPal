@@ -1,5 +1,7 @@
 package com.petpal.walk.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +21,9 @@ public class WalkService {
 		}
 		
 		return false;
+	}
+	
+	public List<WalkVO> selectWalkList(){
+		return walkDAO.selectWalkList();
 	}
 }

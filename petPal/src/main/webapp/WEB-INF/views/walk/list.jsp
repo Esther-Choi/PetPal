@@ -45,115 +45,25 @@
 				</div>
 				<div id="list">
 					<ul>
-						<li id="list-content">
-							<a href="view.html"><img src="${path}/resources/images/dog.jpeg" alt="">
-							<div id="content">
-								<span id="title">3시 호수공원 산책해요!</span>
-								<ul>
-									<li><span>푸들</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>3살</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>호수공원</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>오늘</span></li>
-								</ul>
-							</div></a>
-						</li>
+					<c:forEach items="${list}" var="walkVO">
 						
 						<li id="list-content">
-							<a href=""><img src="${path}/resources/images/dog2.jpeg" alt="">
+							<a href="view.html"><img src="${walkVO.thumb}" alt="">
 							<div id="content">
-								<span id="title">저희 밍키랑 애견카페 갈 강아지 구해요~</span>
+								<span id="title">${walkVO.title}</span>
 								<ul>
-									<li><span>포메나리안</span></li>
+									<li><span>${walkVO.breed}</span></li>
 									<li><span>&#183;</span></li>
-									<li><span>3살</span></li>
+									<li><span>${walkVO.age}살</span></li>
 									<li><span>&#183;</span></li>
-									<li><span>애견카페</span></li>
+									<li><span>${walkVO.location}</span></li>
 									<li><span>&#183;</span></li>
-									<li><span>5월 1일</span></li>
+									<li><span>${walkVO.date}</span></li>
 								</ul>
 							</div></a>
 						</li>
-						<li id="list-content">
-							<a href=""><img src="${path}/resources/images/dog3.jpeg" alt="">
-							<div id="content">
-								<span id="title">산책가실분~!</span>
-								<ul>
-									<li><span>포메나리안</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>5살</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>인천공원</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>내일</span></li>
-								</ul>
-							</div></a>
-						</li>
-						<li id="list-content">
-							<a href=""><img src="${path}/resources/images/dog4.jpeg" alt="">
-							<div id="content">
-								<span id="title">인천대공원 같이 걸어요</span>
-								<ul>
-									<li><span>비글</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>3살</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>인천대공원</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>5월 3일</span></li>
-								</ul>
-							</div></a>
-						</li>
-						<li id="list-content">
-							<a href=""><img src="${path}/resources/images/dog5.jpeg" alt="">
-							<div id="content">
-								<span id="title">1살 애기랑 애견카페 갈 애기강아지?</span>
-								<ul>
-									<li><span>골든리트리버</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>1살</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>애견카페</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>오늘</span></li>
-								</ul>
-							</div></a>
-						</li>
-					
-						<li id="list-content">
-							<a href=""><img src="${path}/resources/images/dog5.jpeg" alt="">
-							<div id="content">
-								<span id="title">1살 애기랑 애견카페 갈 애기강아지?</span>
-								<ul>
-									<li><span>골든리트리버</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>1살</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>애견카페</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>오늘</span></li>
-								</ul>
-							</div></a>
-						</li>
-						<li id="list-content">
-							<a href=""><img src="${path}/resources/images/dog5.jpeg" alt="">
-							<div id="content">
-								<span id="title">1살 애기랑 애견카페 갈 애기강아지?</span>
-								<ul>
-									<li><span>골든리트리버</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>1살</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>애견카페</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>오늘</span></li>
-								</ul>
-							</div></a>
-						</li>
-					
-						
+					</c:forEach>
+								
 					</ul>
 				</div>
 				<a href="/walk/form.do" id="write">

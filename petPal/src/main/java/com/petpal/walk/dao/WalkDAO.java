@@ -17,5 +17,9 @@ public class WalkDAO {
 	public int insertWalk(WalkVO walkVO) {
 		return sql.insert(namespace + ".insertWalk", walkVO);
 	}
+	
+	public java.util.List<WalkVO> selectWalkList(){
+		return sql.selectList(namespace + ".selectWalkList");
+	}
 
 }

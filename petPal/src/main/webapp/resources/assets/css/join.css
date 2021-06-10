@@ -372,3 +372,57 @@ select:focus, input:focus {
     font-size: 0.75em;
 }
 
+
+#file-div {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.file-upload {
+    /* position: relative; */
+    display: inline-block;
+    
+  }
+  
+  .file-upload__label {
+    display: block;
+    padding: 0.6em 1.1em;
+    color: #8c8c8c;
+    background: white;
+    border-radius: .3em;
+    border: solid 1px #d9d9d9;
+  }
+      
+  .file-upload__input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      font-size: 1;
+      width:0;
+      height: 100%;
+      opacity: 0;
+  }
+
+  #remove {
+    background-color: rgb(26, 26, 26, 0.5);
+    color: white;
+    height: 15px;
+    padding: 0;
+    width: 1.3em;
+    height: 1.3em;
+    border-radius: 50%;
+    font-size: 0.7em;
+    position: absolute;
+    margin-left: -0.5em;
+    margin-top: -0.5em;
+  }
+
+  #file-img img {
+    margin-left: 10px; 
+    border-radius: 0.3em; 
+  }
+

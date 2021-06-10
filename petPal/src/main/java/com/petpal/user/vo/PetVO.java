@@ -4,6 +4,7 @@ public class PetVO {
 	
 	private String user_id;
 	private String pet_photo;
+	private String pet_photothumb;
 	private String pet_name;
 	private String pet_age;
 	private String pet_gender;
@@ -20,14 +21,16 @@ public class PetVO {
 	
 	
 	
+	
 	@Override
 	public String toString() {
-		return "PetVO [user_id=" + user_id + ", pet_photo=" + pet_photo + ", pet_name=" + pet_name + ", pet_age="
-				+ pet_age + ", pet_gender=" + pet_gender + ", pet_breed=" + pet_breed + ", address=" + address
-				+ ", pet_weight=" + pet_weight + ", surgery=" + surgery + ", likes=" + likes + ", dislikes=" + dislikes
-				+ ", character1=" + character1 + ", character2=" + character2 + ", character3=" + character3 + ", tip="
-				+ tip + "]";
+		return "PetVO [user_id=" + user_id + ", pet_photo=" + pet_photo + ", pet_photothumb=" + pet_photothumb
+				+ ", pet_name=" + pet_name + ", pet_age=" + pet_age + ", pet_gender=" + pet_gender + ", pet_breed="
+				+ pet_breed + ", address=" + address + ", pet_weight=" + pet_weight + ", surgery=" + surgery
+				+ ", likes=" + likes + ", dislikes=" + dislikes + ", character1=" + character1 + ", character2="
+				+ character2 + ", character3=" + character3 + ", tip=" + tip + "]";
 	}
+	
 	public String getUser_id() {
 		return user_id;
 	}
@@ -40,6 +43,15 @@ public class PetVO {
 	public void setPet_photo(String pet_photo) {
 		this.pet_photo = pet_photo;
 	}
+	
+	public String getPet_photothumb() {
+		return pet_photothumb;
+	}
+
+	public void setPet_photothumb(String pet_photothumb) {
+		this.pet_photothumb = pet_photothumb;
+	}
+
 	public String getPet_name() {
 		return pet_name;
 	}

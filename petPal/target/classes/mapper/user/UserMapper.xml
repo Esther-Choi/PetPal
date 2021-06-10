@@ -40,6 +40,7 @@
 		PET_NUM, 
 		USER_ID, 
 		PET_PHOTO, 
+		PET_PHOTOTHUMB,
 		PET_NAME, 
 		PET_AGE, 
 		PET_GENDER, 
@@ -56,7 +57,8 @@
 		VALUES(
 		SEQ_PET.NEXTVAL, 
 		#{user_id}, 
-		#{pet_photo}, 
+		#{pet_photo},
+		#{pet_photothumb},
 		#{pet_name}, 
 		#{pet_age}, 
 		#{pet_gender}, 
@@ -83,6 +85,14 @@
 	
 	<select id="login" parameterType="string" resultType="userVO">
 		SELECT USER_ID, USER_PW FROM TBL_USER WHERE USER_ID = #{user_id}
+	</select>
+	
+	<select id="getUser" parameterType="string" resultType="userVO">
+		SELECT * FROM TBL_USER WHRER USER_ID = #{user_id}
+	</select>
+	
+	<select id="getPet" parameterType="string" resultType="petVO">
+		SELECT * FROM TBL_PET WHRER USER_ID = #{user_id}
 	</select>
 
 </mapper>

@@ -47,5 +47,13 @@ public class UserService {
 		
 		return userDAO.login(user_id);
 	}
+	
+	public UserVO getUser(String user_id) {
+		return userDAO.getUser(user_id);
+	}
+	
+	public PetVO getPet(String user_id) {
+		return userDAO.getPet(user_id);
+	}
 
 }

@@ -14,7 +14,11 @@
 			WALK_TIME, 
 			WALK_HOUR, 
 			WALK_MINUTE, 
-			CONTENT)
+			CONTENT,
+			REG_DATE,
+			THUMB,
+			AGE,
+			BREED)
 			VALUES(
 			SEQ_WALK.NEXTVAL, 
 			#{user_id}, 
@@ -24,8 +28,18 @@
 			#{walk_time}, 
 			#{walk_hour}, 
 			#{walk_minute}, 
-			#{content})
+			#{content},
+			SYSDATE,
+			#{thumb},
+			#{age},
+			#{breed})
 			
 		</insert>
+		
+		<select id="selectWalkList" resultType="walkVO">
+		<![CDATA[
+			SELECT * FROM TBL_WALK WHERE NUM > 0 ORDER BY NUM DESC, REG_DATE DESC LIMIT 0, 20
+		]]>
+		</select>
 	
 	</mapper>

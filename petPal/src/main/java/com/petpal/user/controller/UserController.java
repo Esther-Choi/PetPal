@@ -1,8 +1,10 @@
 package com.petpal.user.controller;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Locale;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.petpal.user.service.UserService;
 import com.petpal.user.vo.PetVO;
 import com.petpal.user.vo.UserVO;
+import com.petpal.utils.UploadFileUtils;
 
 @Controller
 @RequestMapping("/user/*")
@@ -35,6 +39,12 @@ public class UserController {
 	
 	@Inject
 	BCryptPasswordEncoder pwdEncoder;
+//	
+//	@Resource(name="uploadPath")
+//	private String uploadPath;
+	
+	@Resource(name = "uploadPath")
+	private String uploadPath;
 	
 	//메인 페이지로 이동
 	@RequestMapping(value = "main.do")
@@ -82,19 +92,31 @@ public class UserController {
 	
 	//회원가입 완료
 	@RequestMapping(value="join.do", method = RequestMethod.POST)
-	public String join(
+	public String join (
 			@ModelAttribute UserVO userVO,
-			@ModelAttribute PetVO petVO,
-			HttpServletRequest request,
-			HttpServletResponse response
-//			PetVO pet
-			) {
+			@ModelAttribute PetVO petVO, 
+			MultipartFile file
+			) throws Exception {
 		
 			LOGGER.info("join");
 			
 			String enPw = pwdEncoder.encode(userVO.getUser_pw());
-			userVO.setUser_pw(enPw);
-		
+			String imgUploadPath = uploadPath + File.separator + "imgUpload";
+			String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+			String fileName = null;
+			
+			if(file.getOriginalFilename() != null && file.getOriginalFilename() != "") {
+				
+				fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+			}
+//			else {
+//				fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
+//			}
+			
+			petVO.setPet_photo(File.separator+"imgUpload" + ymdPath + File.separator + fileName);
+			petVO.setPet_photothumb(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
+			
+			userVO.setUser_pw(enPw);		
 			petVO.setUser_id(userVO.getUser_id());
 			Integer.parseInt(userVO.getWalk_hour());
 			Integer.parseInt(userVO.getWalk_minute());
@@ -142,7 +164,7 @@ public class UserController {
 			if(user != null && pwdEncoder.matches(user_pw, user.getUser_pw()) == true) {
 				
 				session.setAttribute("user_id", user_id);
-				return "/walk/list";
+				return "redirect:/walk/list.do";
 				
 			}else {
 				model.addAttribute("msg", "일치하는 정보가 없습니다.");

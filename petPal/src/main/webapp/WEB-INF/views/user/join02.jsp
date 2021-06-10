@@ -24,7 +24,7 @@
             <a href="/user/main.do"><i class="fas fa-times"></i></a>
         </div>
         <div id="input">
-        	<form name="frm" action="/user/join.do" method="post" >
+        	<form name="frm" action="/user/join.do" method="post" enctype="multipart/form-data">
         <input type="hidden" name="user_id" value="${userVO.user_id}">
         <input type="hidden" name="user_pw" value="${userVO.user_pw}">
         <input type="hidden" name="user_name" value="${userVO.user_name}">
@@ -38,9 +38,15 @@
         <input type="hidden" name="walk_place2" value="${userVO.walk_place2}">
         <input type="hidden" name="walk_style" value="${userVO.walk_style}">
             <p id="info">강아지 정보</p>
-            <div id="birth-box">
-                <span id="birth-span">사진</span>
-                <input name="pet_photo" type="file" placeholder="">
+            <div id="file-div">
+                <div class="file-upload">
+                    <label for="upload" class="file-upload__label"><i class="fas fa-camera"></i></label>
+                    <input id="upload" class="file-upload__input" type="file" name="file">
+                </div>
+                <div id="file-img">
+                    <img src="" width="48em" height="48em" alt="" style="display: none;">
+                    <!-- <button id="remove" style="display: none;">x</button> -->
+                </div>
             </div>
             <div id="birth-box">
                 <span id="birth-span">이름</span>
@@ -169,6 +175,18 @@
 	
 
 	$(document).ready(function(){
+		
+		 $("#upload").change(function(){
+	            if(this.files 
+	            && this.files[0]){
+	                var reader = new FileReader;
+	                reader.onload = function(data){
+	                    $("#file-img img").attr("src", data.target.result);
+	                    $("#file-img img").show();
+	                }
+	                reader.readAsDataURL(this.files[0]);
+	            }
+	        });
 		
 		submitForm = function(){			
 			
