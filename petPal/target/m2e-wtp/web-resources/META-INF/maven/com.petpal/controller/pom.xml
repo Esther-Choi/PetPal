@@ -55,6 +55,13 @@
 		    <version>5.0.8.RELEASE</version>
 		</dependency>
 		
+		<!-- JSON 데이터 자동 처리 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.7.3</version>
+		</dependency>
+		
 		<!-- 파일 업로드 -->
 		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
 		<dependency>
@@ -119,6 +126,12 @@
 			</exclusions>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency> 
+			<groupId>org.lazyluke</groupId> 
+			<artifactId>log4jdbc-remix</artifactId> 
+			<version>0.2.7</version> 
+		</dependency>
+
 		<dependency>
 		    <groupId>xerces</groupId>
 		    <artifactId>xercesImpl</artifactId>

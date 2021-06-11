@@ -88,11 +88,11 @@
 	</select>
 	
 	<select id="getUser" parameterType="string" resultType="userVO">
-		SELECT * FROM TBL_USER WHRER USER_ID = #{user_id}
+		SELECT * FROM TBL_USER WHERE USER_ID = #{user_id}
 	</select>
 	
 	<select id="getPet" parameterType="string" resultType="petVO">
-		SELECT * FROM TBL_PET WHRER USER_ID = #{user_id}
+		SELECT * FROM TBL_PET WHERE USER_ID = #{user_id}
 	</select>
 
 </mapper>

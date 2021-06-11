@@ -38,8 +38,60 @@
 		
 		<select id="selectWalkList" resultType="walkVO">
 		<![CDATA[
-			SELECT * FROM TBL_WALK WHERE NUM > 0 ORDER BY NUM DESC, REG_DATE DESC LIMIT 0, 20
+			SELECT
+			NUM, 
+			USER_ID, 
+			TITLE, 
+			LOCATION, 
+			TO_CHAR("DATE", 'YYYY-MM-DD') "DATE", 
+			WALK_TIME, 
+			WALK_HOUR, 
+			WALK_MINUTE, 
+			CONTENT,
+			REG_DATE,
+			THUMB,
+			AGE,
+			BREED
+			FROM (SELECT * FROM TBL_WALK WHERE NUM > 0 ORDER BY NUM DESC, REG_DATE DESC) WHERE ROWNUM BETWEEN 1 AND 20
 		]]>
+		</select>
+		
+		<select id="scrollDown" parameterType="_int" resultType="walkVO">
+		<![CDATA[
+			SELECT
+			NUM, 
+			USER_ID, 
+			TITLE, 
+			LOCATION, 
+			TO_CHAR("DATE", 'YYYY-MM-DD') "DATE", 
+			WALK_TIME, 
+			WALK_HOUR, 
+			WALK_MINUTE, 
+			CONTENT,
+			REG_DATE,
+			THUMB,
+			AGE,
+			BREED
+			FROM TBL_WALK WHERE NUM <= #{num} AND NUM > #{num}-20 ORDER BY NUM DESC, REG_DATE DESC
+		]]>
+		</select>
+		
+		<select id="getWalk" parameterType="_int" resultType="walkVO">
+			SELECT
+			NUM, 
+			USER_ID, 
+			TITLE, 
+			LOCATION, 
+			TO_CHAR("DATE", 'YYYY-MM-DD') "DATE", 
+			WALK_TIME, 
+			WALK_HOUR, 
+			WALK_MINUTE, 
+			CONTENT,
+			REG_DATE,
+			THUMB,
+			AGE,
+			BREED
+			FROM TBL_WALK WHERE NUM = #{num}
 		</select>
 	
 	</mapper>

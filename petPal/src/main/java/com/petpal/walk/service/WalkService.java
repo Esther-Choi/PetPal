@@ -26,4 +26,12 @@ public class WalkService {
 	public List<WalkVO> selectWalkList(){
 		return walkDAO.selectWalkList();
 	}
+	
+	public List<WalkVO> scrollDown(int num){
+		return walkDAO.scrollDown(num);
+	}
+	public WalkVO getWalk(int num) {
+		return walkDAO.getWalk(num);
+	}
+	
 }

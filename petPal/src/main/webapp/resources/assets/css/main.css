@@ -2406,7 +2406,7 @@ ul.actions li:first-child {
 }
 
 #list ul li div #title{
-  font-size: 0.8em;
+  font-size: 1em;
   /* font-weight: 500; */
   color: black;
 }
@@ -2420,10 +2420,14 @@ ul.actions li:first-child {
   margin-right: 5px;
 }
 
-#list ul li div ul li span {
+#list ul li div ul li span, #list ul #location {
   font-size: 0.55em;
   color: #999999;
   font-weight: 500;
+}
+
+#list ul #location {
+	margin-top: -1.3em;
 }
 
 /* Wrapper */
@@ -2486,7 +2490,7 @@ body.is-preload #wrapper {
     padding: 1em 0;
     max-width: 100%;
   } */
-}
+
 
 /* Main */
 

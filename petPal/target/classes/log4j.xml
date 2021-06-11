@@ -10,6 +10,23 @@
 		</layout>
 	</appender>
 	
+	<appender name="console-infolog" class="org.apache.log4j.ConsoleAppender"> 
+		<layout class="org.apache.log4j.PatternLayout"> 
+		<param name="ConversionPattern" value="%d %5p %m%n" /> 
+		</layout> 
+	</appender>
+	
+	<logger name="jdbc.sqlonly" additivity="false"> 
+		<level value="INFO"/> 
+		<appender-ref ref="console-infolog"/> 
+	</logger> 
+	<logger name="jdbc.resultsettable" additivity="false"> 
+		<level value="INFO"/> 
+		<appender-ref ref="console"/> 
+	</logger>
+
+
+	
 	<!-- Application Loggers -->
 	<logger name="com.petpal">
 		<level value="info" />
@@ -34,7 +51,7 @@
 
 	<!-- Root Logger -->
 	<root>
-		<priority value="warn" />
+		<priority value="off" />
 		<appender-ref ref="console" />
 	</root>
 	

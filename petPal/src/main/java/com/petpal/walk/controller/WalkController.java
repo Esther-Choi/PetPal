@@ -1,7 +1,9 @@
 package com.petpal.walk.controller;
 
-import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,10 +14,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.petpal.user.controller.UserController;
 import com.petpal.user.service.UserService;
 import com.petpal.user.vo.PetVO;
+import com.petpal.user.vo.UserVO;
 import com.petpal.walk.service.WalkService;
 import com.petpal.walk.vo.WalkVO;
 
@@ -30,6 +35,9 @@ public class WalkController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Resource(name = "uploadPath")
+	private String uploadPath;
 
 	
 	@RequestMapping(value = "form.do")
@@ -58,7 +66,7 @@ public class WalkController {
 			Integer.parseInt(walkVO.getWalk_hour());
 			Integer.parseInt(walkVO.getWalk_minute());
 			if(walkService.insertWalk(walkVO)) {
-				return "/walk/list.do";
+				return "redirect:/walk/list.do";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,15 +76,47 @@ public class WalkController {
 	}
 	
 	@RequestMapping(value = "list.do", method = RequestMethod.GET)
-	public String selectWalkList(Model model) throws Exception{
+	public String selectWalkList(Model model, HttpSession session) throws Exception{
+		
+		String user_id = (String)session.getAttribute("user_id");
+		Date date = new Date();
+		List<WalkVO> list = walkService.selectWalkList();
+		if(user_id == null) {
+			LOGGER.info("no session");
+			return "redirect:/user/main.do";
+		}
 		LOGGER.info("selectWalkList");
-
+		for(WalkVO walk : list) {
+			
+		}
 		model.addAttribute("list", walkService.selectWalkList());
+		model.addAttribute("now",date );
 
 		
 		return "/walk/list";
 	}
-
+	
+	@RequestMapping(value = "scrollDown.do", method = RequestMethod.POST)
+	@ResponseBody
+	public List<WalkVO> scrollDown(@RequestParam("num") int num){
+		LOGGER.info("scrollDown");
+		num--;
+		return walkService.scrollDown(num);
+	}
+	
+	@RequestMapping(value = "view.do", method = RequestMethod.GET)
+	public String getWalk(@RequestParam("num") int num, Model model) throws Exception {
+		LOGGER.info("getWalk");
+		WalkVO walk = walkService.getWalk(num);
+		UserVO user = userService.getUser(walk.getUser_id());
+		
+		model.addAttribute("walkVO", walk);
+		model.addAttribute("userVO", user);
+		model.addAttribute("address", userService.getPet(walk.getUser_id()).getAddress());
+		
+		return "/walk/view";
+	}
+	
 }
 
 
