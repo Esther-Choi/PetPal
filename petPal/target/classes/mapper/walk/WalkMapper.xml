@@ -8,7 +8,7 @@
 			INSERT INTO HR.TBL_WALK
 			(NUM, 
 			USER_ID, 
-			TITLE, 
+			TITLE,  
 			LOCATION, 
 			"DATE", 
 			WALK_TIME, 

@@ -113,7 +113,7 @@
 			<div id="wrapper">	
 				<div id="bar" style="background-color: white;">
 					<div style="display: flex; align-items: center; position: relative; z-index: 4;">
-						<a href="community.html">닫기</a>
+						<a href="javascript:void(0)" onclick="back()">닫기</a>
 					</div>
 					<span style="color: black; font-size: 0.9em !important;">산책 글쓰기</span>
 					<div>	
@@ -172,6 +172,10 @@
 			
 	</body>
 	<script>
+	function back(){
+		window.history.back();
+	}
+	
 		submit = function(){
 			frm.submit();
 		}

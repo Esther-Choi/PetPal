@@ -18,7 +18,7 @@
     <div id="wrapper" style="padding-top: 10px;">
     <div id="bar" style="border-bottom: none; padding-top: 2px; padding-bottom: 10px; margin-bottom: 0;">
         <div style="display: flex; align-items: center; position: relative; z-index: 4; justify-content: space-between; width: 100%;">
-            <a href="index.html"><i class="fas fa-arrow-left"></i></a>
+            <a href="javascript:void(0)" onclick="back()"><i class="fas fa-arrow-left"></i></a>
             
         </div>
         </div>
@@ -83,6 +83,10 @@
 	
 </body>
 <script>
+		function back(){
+			window.history.back();
+		}
+
     	function like(){
 			if($(".like").css("color") == "rgb(255, 179, 102)"){
 				$(".like").css("color", "#737373");

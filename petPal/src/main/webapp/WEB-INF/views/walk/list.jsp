@@ -73,8 +73,8 @@
 				</a>
 				<!-- Nav -->
 				<nav id="nav">
-					<a href="index.html" class="icon solid" style="opacity: 1 !important;"><i class="fas fa-paw"></i><p>홈</p></a>
-					<a href="community.html" class="icon solid"><i class="fas fa-bullhorn"></i><p>커뮤니티</p></a>
+					<a href="javascript:void(0)" onclick="goTop()" class="icon solid" style="opacity: 1 !important;"><i class="fas fa-paw"></i><p>홈</p></a>
+					<a href="/com/list.do" class="icon solid"><i class="fas fa-bullhorn"></i><p>커뮤니티</p></a>
 					<a href="#contact" class="icon solid"><i class="far fa-comment-alt"></i><p>채팅</p></a>
 					<a href="mypage.html" class="icon brands"><i class="far fa-user"></i><p>나의 펫팔</p></a>
 				</nav>
@@ -91,6 +91,10 @@
 	<script>
 		var toolip = document.getElementsByClassName('toolip');
 		var body = document.getElementById('body');
+		
+		function goTop(){
+			$("#list").scrollTop(0);
+		}
 
 		$(document).ready(function(){
 			$(document).bind("touchend", function(){
@@ -122,7 +126,7 @@
 								$(data).each(
 										function(){
 											str += "<li id='list-content' class='scrolling' num='"+this.num+"'>"
-												+	"<a href='/walk/view.do?num="+this.num+"'><img scr='"+this.thumb+"' alt=''>"
+												+	"<a href='/walk/view.do?num="+this.num+"'><img src='"+this.thumb+"' alt=''>"
 												+	"<div id='content'>"
 												+	"<span id = 'title'>"+this.title+"</span>"
 												+	"<ul>"

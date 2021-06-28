@@ -86,9 +86,7 @@ public class WalkController {
 			return "redirect:/user/main.do";
 		}
 		LOGGER.info("selectWalkList");
-		for(WalkVO walk : list) {
-			
-		}
+		
 		model.addAttribute("list", walkService.selectWalkList());
 		model.addAttribute("now",date );
 
