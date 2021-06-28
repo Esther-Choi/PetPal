@@ -6,8 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.petpal.community.vo.CommentVO;
 import com.petpal.community.vo.CommunityVO;
-import com.petpal.walk.vo.WalkVO;
 
 @Repository
 public class CommunityDAO {
@@ -31,6 +31,14 @@ public class CommunityDAO {
 	
 	public CommunityVO getCom(int num) {
 		return sql.selectOne(namespace + ".getCom", num);
+	}
+	
+	public List<CommentVO> getCommentList(int num) {
+		return sql.selectOne(namespace + ".getCommentList", num);
+	}
+	
+	public int insertComment(CommentVO commentVO) {
+		return sql.insert(namespace + ".insertComment", commentVO);
 	}
 
 }

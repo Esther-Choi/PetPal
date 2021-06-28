@@ -75,10 +75,13 @@
 						
 				</div>
 				<!-- Nav -->
-				<nav id="nav">
-					<input type="text" id="input" placeholder="따뜻한 댓글을 입력해주세요 :D">
-					<a href="" id="sendBtn"><i class="fas fa-arrow-right"></i></a>
-				</nav>
+				
+				<form id="nav" name="frm" method="get" style="width: 100%; margin: 0 10px;">
+					<input type="hidden" name="board_num" value="${comVO.num}">
+					<input type="text" id="input" name="content" placeholder="따뜻한 댓글을 입력해주세요 :D">
+					<a href="javascript:void(0)" id="sendBtn"><i class="fas fa-arrow-right"></i></a>
+				</form>
+				
 			</div>
 		
 		<!-- Scripts -->
@@ -90,6 +93,10 @@
 			
 	</body>
 	<script>
+	
+	$(function(){
+		getCommentList();
+	});
 
 		$("#input").on("change keyup paste", function(){
 			if($("#input").val() == ""){
@@ -98,6 +105,27 @@
 				$("#sendBtn").css("display", "flex");
 			}
 		})
+		
+		$("#sendBtn").on("click", function(){
+			$.ajax({
+				type: 'GET',
+				url: "/com/insertComment.do",
+				data: $("#nav").serialize(),
+				success : function(data){
+					if(data == "success"){
+						$("#input").val("");
+						getCommentList();
+					}
+				},
+				error : function(){
+					console.log("error")
+					alert("댓글 작성 실패. 잠시 후 다시 시도해 주세요")
+				}
+			});
+		});
+		
+		
+		function getCommnetList(){};
 
 		function like(){
 			if($(".like").css("color") == "rgb(255, 179, 102)"){

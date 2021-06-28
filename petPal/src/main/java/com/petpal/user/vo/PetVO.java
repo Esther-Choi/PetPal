@@ -18,6 +18,9 @@ public class PetVO {
 	private String character2;
 	private String character3;
 	private String tip;
+	private String si;
+	private String gungu;
+	private String dong;
 	
 	
 	
@@ -31,6 +34,44 @@ public class PetVO {
 				+ character2 + ", character3=" + character3 + ", tip=" + tip + "]";
 	}
 	
+	
+	
+	public String getSi() {
+		return si;
+	}
+
+
+
+	public void setSi(String si) {
+		this.si = si;
+	}
+
+
+
+	public String getGungu() {
+		return gungu;
+	}
+
+
+
+	public void setGungu(String gungu) {
+		this.gungu = gungu;
+	}
+
+
+
+	public String getDong() {
+		return dong;
+	}
+
+
+
+	public void setDong(String dong) {
+		this.dong = dong;
+	}
+
+
+
 	public String getUser_id() {
 		return user_id;
 	}

@@ -53,7 +53,10 @@
 		CHARACTER1, 
 		CHARACTER2, 
 		CHARACTER3, 
-		TIP)
+		TIP,
+		SI,
+		GUNGU,
+		DONG)
 		VALUES(
 		SEQ_PET.NEXTVAL, 
 		#{user_id}, 
@@ -71,7 +74,10 @@
 		#{character1}, 
 		#{character2}, 
 		#{character3}, 
-		#{tip})
+		#{tip},
+		#{si},
+		#{gungu},
+		#{dong})
 		
 	</insert>
 	

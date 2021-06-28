@@ -1,6 +1,8 @@
 package com.petpal.community.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.petpal.community.service.CommunityService;
+import com.petpal.community.vo.CommentVO;
 import com.petpal.community.vo.CommunityVO;
 import com.petpal.user.controller.UserController;
 import com.petpal.user.service.UserService;
@@ -106,6 +110,57 @@ public class CommunityController {
 		model.addAttribute("thumb", userService.getPet(comVO.getUser_id()).getPet_photothumb());
 		
 		return "/community/view";
+	}
+	
+	//댓글 삽입
+	@RequestMapping(value = "insertComment.do")
+	@ResponseBody
+	public String insertComment(
+			@ModelAttribute CommentVO comVO,
+			HttpSession session) throws Exception {
+		
+		String user_id = (String)session.getAttribute("user_id");
+		String result = "";
+		try {
+			System.out.println(comVO.getContent());
+			comVO.setUser_id(user_id);
+			comVO.setAddress(userService.getPet(user_id).getGungu()+" "+userService.getPet(user_id).getDong());
+			comService.insertComment(comVO);
+			result = "success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			result= "fail";
+		}
+		
+		return result;
+	}
+	
+	//댓글 불러오기
+	@RequestMapping(value = "getComments.do", produces = "application/json; charset=utf8")
+	@ResponseBody
+	public ArrayList<HashMap<String, String>> getComments(
+			@RequestParam("num") int num,
+			HttpSession session
+			) {
+		
+		ArrayList<HashMap<String, String>> hmlist = new ArrayList<HashMap<String, String>>();
+		
+		List<CommentVO> comments = comService.getCommentList(num);
+		
+		if(comments.size() > 0) {
+			for (int i = 0; i < comments.size(); i++) {
+				HashMap<String, String> hm = new HashMap<>();
+				hm.put("name", userService.getUser(comments.get(i).getUser_id()).getUser_name());
+				hm.put("thumb", userService.getPet(comments.get(i).getUser_id()).getPet_photothumb());
+				hm.put("address", comments.get(i).getAddress());
+				hm.put("date", comments.get(i).getDate());
+				hm.put("content", comments.get(i).getContent());
+				
+				hmlist.add(hm);
+			}
+		}
+		return hmlist;
+		
 	}
 	
 }

@@ -5,7 +5,7 @@
 	<mapper namespace="community.dao.CommunityDAO">
 	
 		<insert id="insertCommunity" parameterType="comVO">
-			INSERT INTO HR.TBL_BOARD(
+			INSERT INTO TBL_BOARD(
 			NUM, 
 			USER_ID, 
 			CONTENT, 
@@ -66,6 +66,27 @@
 			"TYPE", 
 			"FILE"
 			FROM TBL_BOARD WHERE NUM = #{num}
+		</select>
+		
+		<insert id="insertComment" parameterType="commentVO">
+			INSERT INTO TBL_COMMENT(
+			NUM, 
+			BOARD_NUM, 
+			USER_ID, 
+			CONTENT, 
+			"DATE",
+			ADDRESS)
+			VALUES(
+			SEQ_COMMENT.NEXTVAL, 
+			#{board_num}, 
+			#{user_id},
+			#{content}, 
+			SYSDATE,
+			#{address})			
+		</insert>
+		
+		<select id="getCommentList" parameterType="_int">
+			SELECT * FROM TBL_COMMENT WHERE NUM = #{num}
 		</select>
 	
 	</mapper>

@@ -17,6 +17,7 @@
 		<typeAlias type="com.petpal.user.vo.PetVO" alias="petVO"/>
 		<typeAlias type="com.petpal.walk.vo.WalkVO" alias="walkVO"/>
 		<typeAlias type="com.petpal.community.vo.CommunityVO" alias="comVO"/>
+		<typeAlias type="com.petpal.community.vo.CommentVO" alias="commentVO"/>
 		
     </typeAliases>
     

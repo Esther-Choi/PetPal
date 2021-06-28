@@ -110,6 +110,9 @@
                 <div>
                     <input name="address" type="text" id="sample_address" readonly>
                     <button type="button" onclick="sample4_execDaumPostcode()">검색</button>
+                    <input type="hidden" name="si">
+                    <input type="hidden" name="gungu">
+                    <input type="hidden" name="dong">
                 </div>
             </div>
             <div id="time-box" class="surgery-box">
@@ -263,6 +266,10 @@
                 var sido = data.sido;
                 var sigungu = data.sigungu;
                 var bname = data.bname
+                
+                $("input[name='si']").val(sido);
+                $("input[name='gungu']").val(sigungu);
+                $("input[name='dong']").val(bname);
 
                 $("#sample_address").val(sido+" "+sigungu+" "+bname);
 

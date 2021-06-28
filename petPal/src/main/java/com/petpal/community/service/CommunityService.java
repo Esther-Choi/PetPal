@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.petpal.community.dao.CommunityDAO;
+import com.petpal.community.vo.CommentVO;
 import com.petpal.community.vo.CommunityVO;
-import com.petpal.walk.vo.WalkVO;
 
 @Service
 public class CommunityService {
@@ -33,6 +33,18 @@ public class CommunityService {
 	
 	public CommunityVO getCom(int num) {
 		return comDAO.getCom(num);
+	}
+	
+	public List<CommentVO> getCommentList(int num) {
+		return comDAO.getCommentList(num);
+	}
+	
+	public boolean insertComment(CommentVO comment) {
+		if(comDAO.insertComment(comment) == 1 ) {
+			return true;
+		}
+		
+		return false;
 	}
 
 }
