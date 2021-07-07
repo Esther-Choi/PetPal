@@ -43,7 +43,7 @@
 			USER_ID, 
 			TITLE, 
 			LOCATION, 
-			TO_CHAR("DATE", 'YYYY-MM-DD') "DATE", 
+			"DATE", 
 			WALK_TIME, 
 			WALK_HOUR, 
 			WALK_MINUTE, 
@@ -63,7 +63,7 @@
 			USER_ID, 
 			TITLE, 
 			LOCATION, 
-			TO_CHAR("DATE", 'YYYY-MM-DD') "DATE", 
+			"DATE", 
 			WALK_TIME, 
 			WALK_HOUR, 
 			WALK_MINUTE, 
@@ -82,7 +82,7 @@
 			USER_ID, 
 			TITLE, 
 			LOCATION, 
-			TO_CHAR("DATE", 'YYYY-MM-DD') "DATE", 
+			"DATE", 
 			WALK_TIME, 
 			WALK_HOUR, 
 			WALK_MINUTE, 
@@ -93,5 +93,19 @@
 			BREED
 			FROM TBL_WALK WHERE NUM = #{num}
 		</select>
+		
+		<insert id="insetLike" parameterType="walkLikeVO">
+			INSERT INTO TBL_WALK_LIKE (
+			NUM,
+			BOARD_NUM,
+			USER_ID,
+			LIKECHECK
+			) VALUES(
+			SEQ_WALKLIKE.NEXTVAL
+			#{board_num},
+			#{user_id},
+			#{likecheck}
+			)
+		</insert>
 	
 	</mapper>

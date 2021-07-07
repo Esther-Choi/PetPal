@@ -42,7 +42,7 @@
 				</div>
 				<div id="cont-list">
 					<ul class="listToChange">
-					<c:forEach items="${list}" var="comVO">
+					<c:forEach items="${lists}" var="comVO">
 						<li id="list-content" class="scrolling"  num = "${comVO.num}">
 							<a href="/com/view.do?num=${comVO.num}">
 							<div id="content">
@@ -58,7 +58,7 @@
 							</a>
 								<div id="sub">
 									<a href="javascript:void(0)"  class="like"><i class="far fa-heart like"></i><span id="like-text">좋아요</span></a>
-									<a href="com_view.html"><i class="far fa-comment"></i>댓글쓰기</a>
+									<a href="/com/view.do?num=${comVO.num}"><i class="far fa-comment"></i>댓글쓰기</a>
 								</div>
 							
 						</li>

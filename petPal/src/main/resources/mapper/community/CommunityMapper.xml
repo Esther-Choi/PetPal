@@ -33,7 +33,7 @@
 			USER_ID, 
 			CONTENT, 
 			LIKE_CNT, 
-			TO_CHAR("DATE", 'YYYY-MM-DD') "DATE", 
+			"DATE", 
 			"TYPE", 
 			"FILE",
 			USER_NAME
@@ -48,7 +48,7 @@
 			USER_ID, 
 			CONTENT, 
 			LIKE_CNT, 
-			TO_CHAR("DATE", 'YYYY-MM-DD') "DATE", 
+			"DATE", 
 			"TYPE", 
 			"FILE",
 			USER_NAME
@@ -62,7 +62,7 @@
 			USER_ID, 
 			CONTENT, 
 			LIKE_CNT, 
-			TO_CHAR("DATE", 'YYYY-MM-DD') "DATE", 
+			"DATE", 
 			"TYPE", 
 			"FILE"
 			FROM TBL_BOARD WHERE NUM = #{num}
@@ -85,8 +85,8 @@
 			#{address})			
 		</insert>
 		
-		<select id="getCommentList" parameterType="_int">
-			SELECT * FROM TBL_COMMENT WHERE NUM = #{num}
+		<select id="getCommentList" parameterType="_int" resultType="commentVO">
+			SELECT * FROM TBL_COMMENT WHERE BOARD_NUM = #{num} ORDER BY NUM DESC
 		</select>
 	
 	</mapper>

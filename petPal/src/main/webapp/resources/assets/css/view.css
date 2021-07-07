@@ -13,15 +13,14 @@ body {
 
 #profile {
     display: flex;
-   
     justify-content: center;
     align-items: center;
     /* border-bottom: solid 1px #e6e6e6; */
     padding-bottom: 0.7em;
     padding-top: 0.7em;
-    background-color: rgb(255, 242, 230, 0.2);
     border-radius: 10px;
     padding-left: 0.5em;
+    border-bottom: 1px solid rgb(242, 242, 242, 0.8);
 }
 
 #profile img {
@@ -66,6 +65,10 @@ body {
 
 /* content */
 
+#bar {
+    border-bottom: 1px solid rgb(115, 115, 115, 0.2) !important;
+}
+
 #content {
     color: black;
     text-align: left;
@@ -77,13 +80,11 @@ body {
 #content #title {
     font-size: 1em;
     font-weight: 600;
-    margin-bottom: 10px;
-    background-color: rgb(242, 242, 242, 0.5);
     padding-left: 0.5em;
-    border-radius: 8px;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
     margin-top: 2.5em;
+    border-bottom: 1px solid rgb(242, 242, 242, 0.8);
 }
 
 #content ul {
@@ -92,9 +93,9 @@ body {
     display: flex;
     line-height: 1.5;
     flex-direction: column;
-    background-color: rgb(255, 242, 230, 0.2);
     border-radius: 10px;
-    padding: 0.5em 0 0.5em 0.5em;
+    padding: 0.7em 0 0.7em 0.5em;
+    border-bottom: 1px solid rgb(242, 242, 242, 0.8);
   }
   
 #content ul li {
@@ -117,11 +118,10 @@ body {
     width: 100%;
     word-break: normal;
     white-space: pre-line;
-    background-color: rgb(242, 242, 242, 0.5);
     min-height: 42.5vh;
     padding: 0.8em 0.7em;
     border-radius: 10px;
-    margin-bottom: 10px;
+    border-bottom: 1px solid rgb(242, 242, 242, 0.8);
 }
 
 /* nav */

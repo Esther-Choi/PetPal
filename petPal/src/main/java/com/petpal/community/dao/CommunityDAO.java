@@ -34,7 +34,7 @@ public class CommunityDAO {
 	}
 	
 	public List<CommentVO> getCommentList(int num) {
-		return sql.selectOne(namespace + ".getCommentList", num);
+		return sql.selectList(namespace + ".getCommentList", num);
 	}
 	
 	public int insertComment(CommentVO commentVO) {

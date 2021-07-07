@@ -9,7 +9,7 @@
 		<title>Pet Pal</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="${path}/resources/assets/css/main.css" />
+		<link rel="stylesheet" href="${path}/resources/assets/css/main.css?after" />
 		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 		<noscript><link rel="stylesheet" href="${path}/resources/assets/css/noscript.css" /></noscript>
@@ -21,7 +21,7 @@
 			<div id="wrapper">	
 				<div id="bar" style="background-color: white;">
 					<div style="display: flex; align-items: center; position: relative; z-index: 4;">
-						<a href="community.html"><i class="fas fa-arrow-left"></i></a>
+						<a href="javascript:void(0)" onclick="back()"><i class="fas fa-arrow-left"></i></a>
 					</div>
 					<div style="width: 20px; display: flex; justify-content: space-between;">	
 						<a href="javascript:void(0)" onclick="save()" id="save"><i class="far fa-heart save" style="font-size: 18px;"></i></a>
@@ -45,39 +45,15 @@
 					</div>
 					<div id="sub">
 						<a href="javascript:void(0)" onclick="like()" id="like"><i class="far fa-heart like"></i><span id><span id="like-text">좋아요</span></a>
-						<a href="javascript:void(0)" onclick="writeCom()"><i class="far fa-comment"></i>댓글 <span id="com-cnt">2</span></a>
+						<a href="javascript:void(0)" onclick="writeCom()"><i class="far fa-comment"></i>댓글 <span id="com-cnt"></span></a>
 					</div>
 					<ul id="comments">
-						<li id="profile">
-							<img src="images/dog2.jpeg" alt="">
-							<div id="info">
-								<p id="nickname">강쥐맘</p>
-								<ul>
-									<li><span id="com-address">용현5동</span></li>
-									<li><span>&#183;</span></li>
-									<li><span id="com-date">2시간 전</span></li>
-								</ul>
-								<p id="comment">제가 아는 강아지에요!!</p>
-							</div>
-						</li>
-						<li id="profile">
-							<img src="images/dog3.jpeg" alt="">
-							<div id="info">
-								<p id="nickname">모카맘</p>
-								<ul>
-									<li><span id="com-address">용현5동</span></li>
-									<li><span>&#183;</span></li>
-									<li><span id="com-date">2시간 전</span></li>
-								</ul>
-								<p id="comment">주인을 찾아서 정말 다행이네요ㅠ</p>
-							</div>
-						</li>
-						
+					</ul>	
 				</div>
 				<!-- Nav -->
 				
 				<form id="nav" name="frm" method="get" style="width: 100%; margin: 0 10px;">
-					<input type="hidden" name="board_num" value="${comVO.num}">
+					<input type="hidden" id="board_num" name="board_num" value="${comVO.num}">
 					<input type="text" id="input" name="content" placeholder="따뜻한 댓글을 입력해주세요 :D">
 					<a href="javascript:void(0)" id="sendBtn"><i class="fas fa-arrow-right"></i></a>
 				</form>
@@ -93,6 +69,11 @@
 			
 	</body>
 	<script>
+	
+	function back(){
+		window.history.back();
+	}
+
 	
 	$(function(){
 		getCommentList();
@@ -125,7 +106,47 @@
 		});
 		
 		
-		function getCommnetList(){};
+		function getCommentList(){
+			var boardNo = $("#board_num").val();
+			$.ajax({
+				type: 'GET',
+				url: "/com/getCommentList.do",
+				data: {"boardNo" : boardNo},
+				dataType : "json",
+				success : function(data){
+					var html = "";
+					var cnt = data.length;
+					
+					if(data.length > 0){
+						for (var i = 0; i < data.length; i++) {
+							html += "<li id='profile'>";
+							html += "<img src='"+data[i].photo+"' alt=''>";
+							html += "<div id='info'>"
+							html += "<p id='nickname'>"+data[i].user_name+"</p>";
+							html += "<ul>";
+							html += "<li><span id='com-address'>"+data[i].address+"</span></li>";
+							html += "<li><span>&#183;</span></li>";
+							html += "<li><span id='com-date'>"+data[i].date+"</span></li>";
+							html += "</ul>";
+							html += "<p id='comment'>"+data[i].content+"</p>"
+							html += "</div>";
+							html += "</li>";
+						}
+						}else{
+							html += "<div id='nocom'>";
+							html += "<i class='fas fa-comment-dots'></i>";
+							html += "<p>아직 댓글이 없어요.</p>";
+							html += "<span>가장 먼저 댓글을 남겨보세요.</span>";
+						}
+						$("#com-cnt").html(cnt);
+						$("#comments").html(html);
+					},
+				error : function(){
+					console.log("error")
+					alert("댓글 로딩 실패. 잠시 후 다시 시도해 주세요")
+				}
+			});
+		};
 
 		function like(){
 			if($(".like").css("color") == "rgb(255, 179, 102)"){

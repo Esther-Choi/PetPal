@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.petpal.walk.vo.WalkLikeVO;
 import com.petpal.walk.vo.WalkVO;
 
 @Repository
@@ -30,6 +31,10 @@ public class WalkDAO {
 	
 	public WalkVO getWalk(int num) {
 		return sql.selectOne(namespace + ".getWalk", num);
+	}
+	
+	public int insertLike(WalkLikeVO vo) {
+		return sql.insert(namespace + ".insertLike", vo);
 	}
 
 }

@@ -9,7 +9,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="${path}/resources/assets/css/main.css" />
-		<link rel="stylesheet" href="${path}/resources/assets/css/view.css" />
+		<link rel="stylesheet" href="${path}/resources/assets/css/view.css?after" />
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 	</head>
