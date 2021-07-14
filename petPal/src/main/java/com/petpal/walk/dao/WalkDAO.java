@@ -1,5 +1,6 @@
 package com.petpal.walk.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -33,8 +34,20 @@ public class WalkDAO {
 		return sql.selectOne(namespace + ".getWalk", num);
 	}
 	
-	public int insertLike(WalkLikeVO vo) {
-		return sql.insert(namespace + ".insertLike", vo);
+	public int insertLike(WalkLikeVO walkLikeVO) {
+		return sql.insert(namespace + ".insertLike", walkLikeVO);
+	}
+	
+	public int searchWalkLike(WalkLikeVO walkLikeVO) {
+		return sql.selectOne(namespace + ".searchWalkLike", walkLikeVO);
+	}
+	
+	public int getWalkLike(HashMap<String, Object> map) {
+		return sql.selectOne(namespace + ".getWalkLike", map);
+	}
+	
+	public int updateLike(WalkLikeVO walkLikeVO) {
+		return sql.insert(namespace + ".updateLike", walkLikeVO);
 	}
 
 }

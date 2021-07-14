@@ -208,7 +208,6 @@ public class CommunityController {
 		String user_id = (String)session.getAttribute("user_id");
 		String result = "";
 		try {
-			System.out.println(comVO.getContent());
 			comVO.setUser_id(user_id);
 			comVO.setAddress(userService.getPet(user_id).getGungu()+" "+userService.getPet(user_id).getDong());
 			comService.insertComment(comVO);

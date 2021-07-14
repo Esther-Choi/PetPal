@@ -1,5 +1,6 @@
 package com.petpal.walk.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,18 @@ public class WalkService {
 		return false;
 	}
 	
-	public boolean insertLike(WalkLikeVO vo) {
+	public boolean insertLike(WalkLikeVO walkLikeVO) {
 		
-		if(walkDAO.insertLike(vo) == 1) {
+		if(walkDAO.insertLike(walkLikeVO) == 1) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean updateLike(WalkLikeVO walkLikeVO) {
+		
+		if(walkDAO.updateLike(walkLikeVO) == 1) {
 			return true;
 		}
 		
@@ -42,6 +52,14 @@ public class WalkService {
 	}
 	public WalkVO getWalk(int num) {
 		return walkDAO.getWalk(num);
+	}
+	
+	public int searchWalkLike(WalkLikeVO vo) {
+		return walkDAO.searchWalkLike(vo);
+	}
+	
+	public int getWalkLike(HashMap<String, Object> map) {
+		return walkDAO.getWalkLike(map);
 	}
 	
 }

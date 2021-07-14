@@ -16,6 +16,7 @@
 	</head>
 	<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
 	<body id="body">
+	<input type="hidden" value="${check}" id="check">
 		<!-- <div id="bg"></div> -->
 		<!-- Wrapper-->
 			<div id="wrapper">	
@@ -69,6 +70,14 @@
 			
 	</body>
 	<script>
+	
+	$(document).ready(function(){
+		var check = $("#check").val();
+		
+		if(check == 1){
+			
+		}
+	});
 	
 	function back(){
 		window.history.back();

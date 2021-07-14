@@ -2,6 +2,7 @@ package com.petpal.walk.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -23,6 +24,7 @@ import com.petpal.user.service.UserService;
 import com.petpal.user.vo.PetVO;
 import com.petpal.user.vo.UserVO;
 import com.petpal.walk.service.WalkService;
+import com.petpal.walk.vo.WalkLikeVO;
 import com.petpal.walk.vo.WalkVO;
 
 @Controller
@@ -36,6 +38,9 @@ public class WalkController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private WalkService likeService;
 	
 	@Resource(name = "uploadPath")
 	private String uploadPath;
@@ -156,11 +161,22 @@ public class WalkController {
 	}
 	
 	@RequestMapping(value = "view.do", method = RequestMethod.GET)
-	public String getWalk(@RequestParam("num") int num, Model model) throws Exception {
+	public String getWalk(@RequestParam("num") int num, Model model, HttpSession session) throws Exception {
 		LOGGER.info("getWalk");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		WalkVO walk = walkService.getWalk(num);
 		UserVO user = userService.getUser(walk.getUser_id());
+		String user_id = (String)session.getAttribute("user_id");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int check = 0;
+		
+		map.put("user_id", user_id);
+		map.put("board_num", num);
+		
+		if(likeService.getWalkLike(map) == "") {
+			
+		}
 		
 		try {
 			
@@ -187,8 +203,37 @@ public class WalkController {
 		model.addAttribute("walkVO", walk);
 		model.addAttribute("userVO", user);
 		model.addAttribute("address", userService.getPet(walk.getUser_id()).getAddress());
+		model.addAttribute("check", likeService.getWalkLike(map));
 		
 		return "/walk/view";
+	}
+	
+	@RequestMapping(value = "likeWalk.do", method = RequestMethod.GET)
+	@ResponseBody
+	public String likeWalk(
+			@ModelAttribute WalkLikeVO walkLikeVO,
+			@RequestParam("num") int num,
+			@RequestParam("check") int check,
+			HttpSession session
+			)  throws Exception{
+		String user_id = (String)session.getAttribute("user_id");
+		String result = "";
+		try {
+			walkLikeVO.setUser_id(user_id);
+			walkLikeVO.setBoard_num(num);
+			walkLikeVO.setLikecheck(check);
+			if(likeService.searchWalkLike(walkLikeVO) == 1) {
+				likeService.updateLike(walkLikeVO);
+			}else {				
+				likeService.insertLike(walkLikeVO);
+			}
+			result = "success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "fali";
+		}
+		
+		return result;
 	}
 	
 }

@@ -94,18 +94,32 @@
 			FROM TBL_WALK WHERE NUM = #{num}
 		</select>
 		
-		<insert id="insetLike" parameterType="walkLikeVO">
+		<insert id="insertLike" parameterType="walkLikeVO">
 			INSERT INTO TBL_WALK_LIKE (
 			NUM,
 			BOARD_NUM,
 			USER_ID,
 			LIKECHECK
 			) VALUES(
-			SEQ_WALKLIKE.NEXTVAL
+			SEQ_WALKLIKE.NEXTVAL,
 			#{board_num},
 			#{user_id},
-			#{likecheck}
+			1
 			)
 		</insert>
+		
+		<select id="searchWalkLike" parameterType="walkLikeVO" resultType="_int">
+			SELECT COUNT(*) FROM TBL_WALK_LIKE WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
+		</select>
+		
+		<select id="getWalkLike" parameterType="map" resultType="_int">
+			SELECT LIKECHECK FROM TBL_WALK_LIKE WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
+		</select>
+		
+		<update id="updateLike" parameterType="walkLikeVO">
+			UPDATE TBL_WALK_LIKE
+			SET LIKECHECK = #{likecheck}
+			WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
+		</update>
 	
 	</mapper>

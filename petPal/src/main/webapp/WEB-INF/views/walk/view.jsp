@@ -15,6 +15,7 @@
 	</head>
 	<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
 <body>
+	<input type="hidden" value="${check}" id="check">
     <div id="wrapper" style="padding-top: 10px;">
     <div id="bar" style="border-bottom: none; padding-top: 2px; padding-bottom: 10px; margin-bottom: 0;">
         <div style="display: flex; align-items: center; position: relative; z-index: 4; justify-content: space-between; width: 100%;">
@@ -66,7 +67,7 @@
         </div>
     <!-- Nav -->
     <nav id="nav" class="nav">
-        <button id="heart" onclick="like()"><i class="far fa-heart like"></i></button>
+        <button id="heart" onclick="like('${walkVO.num}')" ><i class="far fa-heart like" id="color"></i></button>
             <div class="btn-box">
                 <a href="profile.html" id="viewProfile">프로필 보기</a>                
             </div>
@@ -83,17 +84,47 @@
 	
 </body>
 <script>
+
+		$(document).ready(function(){
+			var check = $("#check").val();
+			
+			if(check == 1){
+				$(".like").css("color", "rgb(255, 179, 102)");
+			}else {
+				$(".like").css("color", "#737373");
+			}
+		});
+		
 		function back(){
 			window.history.back();
 		}
 
-    	function like(){
-			if($(".like").css("color") == "rgb(255, 179, 102)"){
-				$(".like").css("color", "#737373");
+    	function like(num){
+    		var check = 0;
+    		if($(".like").css("color") == "rgb(255, 179, 102)"){
+				check = 0;
 			}else {
-				$(".like").css("color", "rgb(255, 179, 102)");
-
+				check = 1;
 			}
+    		$.ajax({
+    			type: 'GET',
+    			url : "/walk/likeWalk.do?num="+num+"&check="+check,
+    			success : function(data){
+    				if(data == "success"){
+    					if($(".like").css("color") == "rgb(255, 179, 102)"){
+    						$(".like").css("color", "#737373");
+    					}else {
+    						$(".like").css("color", "rgb(255, 179, 102)");
+    					}
+    				}
+    			},
+    			error : function(){
+    				console.log("error")
+					alert("좋아요 실패. 잠시 후 다시 시도해 주세요")
+				
+    			}
+    		});
+    		
 		}
 </script>
 </html>
