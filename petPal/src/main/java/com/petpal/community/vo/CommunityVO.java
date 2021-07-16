@@ -11,6 +11,7 @@ public class CommunityVO {
 	private String type;
 	private String file;
 	private String user_name;
+	private Integer likecheck;
 	
 	@Override
 	public String toString() {
@@ -20,6 +21,18 @@ public class CommunityVO {
 	
 	
 	
+	public Integer getLikecheck() {
+		return likecheck;
+	}
+
+
+
+	public void setLikecheck(Integer likecheck) {
+		this.likecheck = likecheck;
+	}
+
+
+
 	public String getUser_name() {
 		return user_name;
 	}

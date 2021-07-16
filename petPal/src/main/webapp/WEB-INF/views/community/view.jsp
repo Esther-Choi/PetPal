@@ -14,18 +14,25 @@
 		<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 		<noscript><link rel="stylesheet" href="${path}/resources/assets/css/noscript.css" /></noscript>
 	</head>
+	<style>
+		.active {
+			color: rgb(255, 179, 102);
+		}
+		
+	</style>
 	<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
 	<body id="body">
 	<input type="hidden" value="${check}" id="check">
+	<input type="hidden" value="${check2}" id="check2">
 		<!-- <div id="bg"></div> -->
 		<!-- Wrapper-->
 			<div id="wrapper">	
 				<div id="bar" style="background-color: white;">
 					<div style="display: flex; align-items: center; position: relative; z-index: 4;">
-						<a href="javascript:void(0)" onclick="back()"><i class="fas fa-arrow-left"></i></a>
+						<a href="/com/list.do"><i class="fas fa-arrow-left"></i></a>
 					</div>
 					<div style="width: 20px; display: flex; justify-content: space-between;">	
-						<a href="javascript:void(0)" onclick="save()" id="save"><i class="far fa-heart save" style="font-size: 18px;"></i></a>
+						<a href="javascript:void(0)" onclick="scrap('${comVO.num}')" id="save"><i class="far fa-heart scrap" style="font-size: 18px;"></i></a>
 					</div>
 				</div>
 				<div id="view-cont">
@@ -45,7 +52,14 @@
 						<p>${comVO.content}</p>
 					</div>
 					<div id="sub">
-						<a href="javascript:void(0)" onclick="like()" id="like"><i class="far fa-heart like"></i><span id><span id="like-text">좋아요</span></a>
+						<c:choose>
+							<c:when test="${comVO.likecheck eq 1}">
+								<a href="javascript:void(0)" num = "${comVO.num}" class="like"><i class="far fa-heart like active"></i><span class="active" id="like-text">좋아요</span></a>
+							</c:when>
+							<c:otherwise>
+								<a href="javascript:void(0)" num = "${comVO.num}" class="like"><i class="far fa-heart like"></i><span id="like-text">좋아요</span></a>
+							</c:otherwise>
+						</c:choose>
 						<a href="javascript:void(0)" onclick="writeCom()"><i class="far fa-comment"></i>댓글 <span id="com-cnt"></span></a>
 					</div>
 					<ul id="comments">
@@ -71,17 +85,16 @@
 	</body>
 	<script>
 	
+	
 	$(document).ready(function(){
-		var check = $("#check").val();
+		var check = $("#check2").val();
 		
 		if(check == 1){
-			
+			$(".scrap").css("color", "rgb(255, 179, 102)");
+		}else {
+			$(".scrap").css("color", "#737373");
 		}
 	});
-	
-	function back(){
-		window.history.back();
-	}
 
 	
 	$(function(){
@@ -157,28 +170,74 @@
 			});
 		};
 
-		function like(){
-			if($(".like").css("color") == "rgb(255, 179, 102)"){
-				$(".like").css("color", "#737373");
-				$("#like-text").css("color", "#737373");
-			}else {
-				$(".like").css("color", "rgb(255, 179, 102)");
-				$("#like-text").css("color", "rgb(255, 179, 102)");
 
-			}
-		}
-
-		function save(){
-			if($(".save").css("color") == "rgb(255, 179, 102)"){
-				$(".save").css("color", "#737373");
-			}else {
-				$(".save").css("color", "rgb(255, 179, 102)");
-
-			}
-		}
 
 		function writeCom(){
 			$("input").focus();
+		}
+		
+		$(".like").on("click", function(){
+			var i = $(this).children("i");
+			var span = $(this).children("span");
+			var color = span.attr("class");
+			var num = $(this).attr("num");
+			
+			var check = 0;
+    		if(color == "active"){
+				check = 0;
+			}else {
+				check = 1;
+			}
+    		$.ajax({
+    			type: 'GET',
+    			url : "/com/likeCom.do?num="+num+"&check="+check,
+    			success : function(data){
+    				if(data == "success"){
+    					if(color == "active"){
+    						i.attr("class", "far fa-heart like");
+    						span.attr("class", "");
+    					}else {
+    						i.attr("class", "far fa-heart like active");
+    						span.attr("class", "active");
+
+    					}
+    				}
+    			},
+    			error : function(){
+    				console.log("error")
+					alert("좋아요 실패. 잠시 후 다시 시도해 주세요")
+				
+    			}
+    		});
+
+		})
+		
+		function scrap(num){
+    		var check = 0;
+    		if($(".scrap").css("color") == "rgb(255, 179, 102)"){
+				check = 0;
+			}else {
+				check = 1;
+			}
+    		$.ajax({
+    			type: 'GET',
+    			url : "/com/scrapCom.do?num="+num+"&check="+check,
+    			success : function(data){
+    				if(data == "success"){
+    					if($(".scrap").css("color") == "rgb(255, 179, 102)"){
+    						$(".scrap").css("color", "#737373");
+    					}else {
+    						$(".scrap").css("color", "rgb(255, 179, 102)");
+    					}
+    				}
+    			},
+    			error : function(){
+    				console.log("error")
+					alert("좋아요 실패. 잠시 후 다시 시도해 주세요")
+				
+    			}
+    		});
+    		
 		}
 		
 	</script>

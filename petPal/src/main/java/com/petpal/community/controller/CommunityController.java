@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,12 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.petpal.community.service.CommunityService;
+import com.petpal.community.vo.ComLikeVO;
+import com.petpal.community.vo.ComScrapVO;
 import com.petpal.community.vo.CommentVO;
 import com.petpal.community.vo.CommunityVO;
 import com.petpal.user.controller.UserController;
 import com.petpal.user.service.UserService;
 import com.petpal.user.vo.UserVO;
-import com.petpal.walk.vo.WalkVO;
 
 @Controller
 @RequestMapping("/com/*")
@@ -46,10 +46,14 @@ public class CommunityController {
 			HttpSession session
 			) throws Exception{
 		
+		String user_id = (String)session.getAttribute("user_id");
+		if(user_id == null) {
+			LOGGER.info("no session");
+			return "redirect:/user/main.do";
+		}
 		LOGGER.info("insertCommunity");
 		
 		try {
-			String user_id = (String)session.getAttribute("user_id");
 			comVO.setUser_id(user_id);
 			System.out.println(userService.getUser(user_id).getUser_name());
 			comVO.setUser_name(userService.getUser(user_id).getUser_name());
@@ -77,19 +81,34 @@ public class CommunityController {
 	public String selectComList(Model model, HttpSession session) throws Exception{
 		
 		String user_id = (String)session.getAttribute("user_id");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		List<CommunityVO> lists =  comService.selectComList();
 		
 		if(user_id == null) {
 			LOGGER.info("no session");
 			return "redirect:/user/main.do";
 		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		List<CommunityVO> lists =  comService.selectComList();
+		
 		LOGGER.info("selectComList");
 		
 		try {
 			
 			if(lists.size() > 0 ) {
+				
 				for (int i = 0; i < lists.size(); i++) {
+					
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					
+					map.put("user_id", user_id);
+					map.put("board_num", lists.get(i).getNum());
+					
+					if(comService.getComLike(map) != null) {
+						
+						if(comService.getComLike(map) == 1) {
+							lists.get(i).setLikecheck(1);
+						}
+					}
+					
 					Date startDate = new Date();
 					Date endDate = sdf.parse(lists.get(i).getDate());
 					
@@ -121,9 +140,10 @@ public class CommunityController {
 	
 	@RequestMapping(value = "scrollDown.do", method = RequestMethod.POST)
 	@ResponseBody
-	public List<CommunityVO> scrollDown(@RequestParam("num") int num){
+	public List<CommunityVO> scrollDown(@RequestParam("num") int num, HttpSession session){
 		LOGGER.info("scrollDown");
 		num--;
+		String user_id = (String)session.getAttribute("user_id");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<CommunityVO> lists =  comService.scrollDown(num);
 		
@@ -131,6 +151,19 @@ public class CommunityController {
 			
 			if(lists.size() > 0 ) {
 				for (int i = 0; i < lists.size(); i++) {
+					
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					
+					map.put("user_id", user_id);
+					map.put("board_num", lists.get(i).getNum());
+					
+					if(comService.getComLike(map) != null) {
+						
+						if(comService.getComLike(map) == 1) {
+							lists.get(i).setLikecheck(1);
+						}
+					}
+					
 					Date startDate = new Date();
 					Date endDate = sdf.parse(lists.get(i).getDate());
 					
@@ -159,12 +192,36 @@ public class CommunityController {
 	}
 	
 	@RequestMapping(value="view.do", method = RequestMethod.GET)
-	public String getCom(@RequestParam("num") int num, Model model) throws Exception {
+	public String getCom(@RequestParam("num") int num, Model model, HttpSession session) throws Exception {
 		
+		String user_id = (String)session.getAttribute("user_id");
+		if(user_id == null) {
+			LOGGER.info("no session");
+			return "redirect:/user/main.do";
+		}
 		LOGGER.info("com view");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		CommunityVO comVO = comService.getCom(num);
 		UserVO user = userService.getUser(comVO.getUser_id());
+		int check = 0;
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("user_id", user_id);
+		map.put("board_num", num);
+		
+		if(comService.getComLike(map) != null) {
+			
+			if(comService.getComLike(map) == 1) {
+				comVO.setLikecheck(1);
+			}
+		}
+		
+		if(comService.getComScrap(map) != null) {
+			if(comService.getComScrap(map) == 1) {
+				model.addAttribute("check2", comService.getComScrap(map));
+			}
+		}
 		
 		try {
 			
@@ -206,6 +263,10 @@ public class CommunityController {
 			HttpSession session) throws Exception {
 		
 		String user_id = (String)session.getAttribute("user_id");
+		if(user_id == null) {
+			LOGGER.info("no session");
+			return "redirect:/user/main.do";
+		}
 		String result = "";
 		try {
 			comVO.setUser_id(user_id);
@@ -297,6 +358,70 @@ public class CommunityController {
 		}
 		return hmlist;
 		
+	}
+	
+	@RequestMapping(value = "likeCom.do", method = RequestMethod.GET)
+	@ResponseBody
+	public String likeCom(
+			@ModelAttribute ComLikeVO comLikeVO,
+			@RequestParam("num") int num,
+			@RequestParam("check") int check,
+			HttpSession session
+			)  throws Exception{
+		String user_id = (String)session.getAttribute("user_id");
+		if(user_id == null) {
+			LOGGER.info("no session");
+			return "redirect:/user/main.do";
+		}
+		String result = "";
+		try {
+			comLikeVO.setUser_id(user_id);
+			comLikeVO.setBoard_num(num);
+			comLikeVO.setLikecheck(check);
+			if(comService.searchComLike(comLikeVO) == 1) {
+				comService.updateLike(comLikeVO);
+			}else {				
+				comService.insertLike(comLikeVO);
+			}
+			result = "success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "fali";
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "scrapCom.do", method = RequestMethod.GET)
+	@ResponseBody
+	public String scrapCom(
+			@ModelAttribute ComScrapVO comScrapVO,
+			@RequestParam("num") int num,
+			@RequestParam("check") int check,
+			HttpSession session
+			)  throws Exception{
+		String user_id = (String)session.getAttribute("user_id");
+		if(user_id == null) {
+			LOGGER.info("no session");
+			return "redirect:/user/main.do";
+		}
+		String result = "";
+		try {
+			comScrapVO.setUser_id(user_id);
+			comScrapVO.setBoard_num(num);
+			comScrapVO.setLikecheck(check);
+			if(comService.searchComScrap(comScrapVO) == 1) {
+				comService.updateScrap(comScrapVO);
+			}else {				
+				comService.insertScrap(comScrapVO);
+			}
+			result = "success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "fali";
+		}
+		
+		return result;
 	}
 	
 }

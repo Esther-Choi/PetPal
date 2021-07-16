@@ -1,7 +1,9 @@
 package com.petpal.user.controller;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Locale;
 
 import javax.annotation.Resource;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -176,6 +179,28 @@ public class UserController {
 		}
 		
 		return "error";
+	}
+	
+	@RequestMapping(value = "profile.do", method = RequestMethod.GET)
+	public String profile(@RequestParam("user_id") String user_id, Model model) throws Exception {
+		
+		UserVO user = userService.getUser(user_id);
+		PetVO pet = userService.getPet(user_id);
+		int birthYear = Integer.parseInt(user.getUser_birth().substring(0, 4));
+		
+		Calendar current = Calendar.getInstance();
+		int year = current.get(Calendar.YEAR);
+		
+		int age = year - birthYear;
+		
+		user.setUser_birth(age+"");
+		user.setWalk_day(user.getWalk_day().replaceFirst("\\[", ""));
+		user.setWalk_day(user.getWalk_day().replaceFirst("\\]", ""));
+		
+		model.addAttribute("userVO", user);
+		model.addAttribute("petVO", pet);
+		
+		return "/user/profile";
 	}
 	
 }

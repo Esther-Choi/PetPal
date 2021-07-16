@@ -10,7 +10,7 @@
 		<title>Pet Pal</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="${path}/resources/assets/css/main.css" />
+		<link rel="stylesheet" href="${path}/resources/assets/css/main.css?after" />
 		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 		<noscript><link rel="stylesheet" href="${path}/resources/assets/css/noscript.css" /></noscript>
@@ -19,9 +19,15 @@
 		#sub {
 			padding-top: 5px;
 		}
+		
+		.active {
+			color: rgb(255, 179, 102);
+		}
+		
 	</style>
 	<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
 	<body id="body">
+	<input type="hidden" value="${check}" id="check">
 		<!-- <div id="bg"></div> -->
 		<!-- Wrapper-->
 			<div id="wrapper">	
@@ -43,7 +49,7 @@
 				<div id="cont-list">
 					<ul class="listToChange">
 					<c:forEach items="${lists}" var="comVO">
-						<li id="list-content" class="scrolling"  num = "${comVO.num}">
+						<li id="list-content" class="scrolling"  >
 							<a href="/com/view.do?num=${comVO.num}">
 							<div id="content">
 								<span id="com-type">${comVO.type}</span>
@@ -57,7 +63,14 @@
 							</div>
 							</a>
 								<div id="sub">
-									<a href="javascript:void(0)"  class="like"><i class="far fa-heart like"></i><span id="like-text">좋아요</span></a>
+									<c:choose>
+										<c:when test="${comVO.likecheck eq 1}">
+											<a href="javascript:void(0)" num = "${comVO.num}" class="like"><i class="far fa-heart like active"></i><span class="active" id="like-text">좋아요</span></a>
+										</c:when>
+										<c:otherwise>
+											<a href="javascript:void(0)" num = "${comVO.num}" class="like"><i class="far fa-heart like"></i><span id="like-text">좋아요</span></a>
+										</c:otherwise>
+									</c:choose>
 									<a href="/com/view.do?num=${comVO.num}"><i class="far fa-comment"></i>댓글쓰기</a>
 								</div>
 							
@@ -135,7 +148,11 @@
 												+	"</ul>"
 												+	"</div></a>"
 												+	"<div id='sub'>"
+												if(this.likecheck == 1){
+												+	"<a href='javascript:void(0)' class='like'><i class='far fa-heart like active'></i><span class='active' id='like-text'>좋아요</span></a>"
+												}else {
 												+	"<a href='javascript:void(0)' class='like'><i class='far fa-heart like'></i><span id='like-text'>좋아요</span></a>"
+												}
 												+	"<a href='com_view.html'><i class='far fa-comment'></i>댓글쓰기</a>"
 												+	"</div></li>";
 								});
@@ -172,17 +189,39 @@
 		$(".like").on("click", function(){
 			var i = $(this).children("i");
 			var span = $(this).children("span");
-
-			if(i.css("color") == "rgb(255, 179, 102)"){
-				i.css("color", "#737373");
-				span.css("color", "#737373");
+			var color = span.attr("class");
+			var num = $(this).attr("num");
+			
+			var check = 0;
+    		if(color == "active"){
+				check = 0;
 			}else {
-				i.css("color", "rgb(255, 179, 102)");
-				span.css("color", "rgb(255, 179, 102)");
-
+				check = 1;
 			}
-		})
+    		$.ajax({
+    			type: 'GET',
+    			url : "/com/likeCom.do?num="+num+"&check="+check,
+    			success : function(data){
+    				if(data == "success"){
+    					if(color == "active"){
+    						i.attr("class", "far fa-heart like");
+    						span.attr("class", "");
+    					}else {
+    						i.attr("class", "far fa-heart like active");
+    						span.attr("class", "active");
 
+    					}
+    				}
+    			},
+    			error : function(){
+    				console.log("error")
+					alert("좋아요 실패. 잠시 후 다시 시도해 주세요")
+				
+    			}
+    		});
+
+		})
+		
 		
 	</script>
 </html>

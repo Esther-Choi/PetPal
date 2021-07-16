@@ -58,7 +58,7 @@ public class WalkService {
 		return walkDAO.searchWalkLike(vo);
 	}
 	
-	public int getWalkLike(HashMap<String, Object> map) {
+	public Integer getWalkLike(HashMap<String, Object> map) {
 		return walkDAO.getWalkLike(map);
 	}
 	

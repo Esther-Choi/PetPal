@@ -2455,6 +2455,10 @@ ul.actions li:first-child {
 	margin-top: -1.3em;
 }
 
+.active {
+		color: rgb(255, 179, 102);
+}
+
 /* Wrapper */
 
 #wrapper {

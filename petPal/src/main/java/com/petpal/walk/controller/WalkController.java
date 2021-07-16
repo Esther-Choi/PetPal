@@ -59,10 +59,14 @@ public class WalkController {
 			HttpSession session
 			) throws Exception{
 		
+		String user_id = (String)session.getAttribute("user_id");
+		if(user_id == null) {
+			LOGGER.info("no session");
+			return "redirect:/user/main.do";
+		}
 		LOGGER.info("insertWalk");
 		
 		try {
-			String user_id = (String)session.getAttribute("user_id");
 			PetVO pet = userService.getPet(user_id);
 			walkVO.setUser_id(user_id);			
 			walkVO.setThumb(pet.getPet_photothumb());
@@ -128,9 +132,10 @@ public class WalkController {
 	@ResponseBody
 	public List<WalkVO> scrollDown(@RequestParam("num") int num){
 		LOGGER.info("scrollDown");
+		
 		num--;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		List<WalkVO> lists = walkService.selectWalkList();
+		List<WalkVO> lists = walkService.scrollDown(num);
 		try {
 			
 			if(lists.size() > 0 ) {
@@ -163,19 +168,24 @@ public class WalkController {
 	@RequestMapping(value = "view.do", method = RequestMethod.GET)
 	public String getWalk(@RequestParam("num") int num, Model model, HttpSession session) throws Exception {
 		LOGGER.info("getWalk");
+		
+		String user_id = (String)session.getAttribute("user_id");
+		if(user_id == null) {
+			LOGGER.info("no session");
+			return "redirect:/user/main.do";
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		WalkVO walk = walkService.getWalk(num);
 		UserVO user = userService.getUser(walk.getUser_id());
-		String user_id = (String)session.getAttribute("user_id");
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int check = 0;
 		
 		map.put("user_id", user_id);
 		map.put("board_num", num);
-		
-		if(likeService.getWalkLike(map) == "") {
-			
+		System.out.println(likeService.getWalkLike(map) );
+		if(likeService.getWalkLike(map) != null) {
+			model.addAttribute("check", likeService.getWalkLike(map));
 		}
 		
 		try {
@@ -203,7 +213,7 @@ public class WalkController {
 		model.addAttribute("walkVO", walk);
 		model.addAttribute("userVO", user);
 		model.addAttribute("address", userService.getPet(walk.getUser_id()).getAddress());
-		model.addAttribute("check", likeService.getWalkLike(map));
+		
 		
 		return "/walk/view";
 	}
@@ -217,6 +227,10 @@ public class WalkController {
 			HttpSession session
 			)  throws Exception{
 		String user_id = (String)session.getAttribute("user_id");
+		if(user_id == null) {
+			LOGGER.info("no session");
+			return "redirect:/user/main.do";
+		}
 		String result = "";
 		try {
 			walkLikeVO.setUser_id(user_id);

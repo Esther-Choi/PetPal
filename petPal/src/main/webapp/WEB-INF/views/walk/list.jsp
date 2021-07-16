@@ -21,7 +21,6 @@
 	<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
 	<body id="body">
 	<%
-		System.out.println(session.getAttribute("user_id"));
 		if(session.getAttribute("user_id") == null){
 			%>
 			<script type="text/javascript">
@@ -29,7 +28,6 @@
 			</script>
 			<% 
 		}%>	
-	<!-- <div id="bg"></div> -->
 		<!-- Wrapper-->
 			<div id="wrapper">	
 				<div id="bar">

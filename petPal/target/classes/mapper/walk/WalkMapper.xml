@@ -112,7 +112,7 @@
 			SELECT COUNT(*) FROM TBL_WALK_LIKE WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
 		</select>
 		
-		<select id="getWalkLike" parameterType="map" resultType="_int">
+		<select id="getWalkLike" parameterType="map" resultType="Integer">
 			SELECT LIKECHECK FROM TBL_WALK_LIKE WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
 		</select>
 		

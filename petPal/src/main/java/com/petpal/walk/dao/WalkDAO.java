@@ -42,7 +42,7 @@ public class WalkDAO {
 		return sql.selectOne(namespace + ".searchWalkLike", walkLikeVO);
 	}
 	
-	public int getWalkLike(HashMap<String, Object> map) {
+	public Integer getWalkLike(HashMap<String, Object> map) {
 		return sql.selectOne(namespace + ".getWalkLike", map);
 	}
 	

@@ -88,5 +88,61 @@
 		<select id="getCommentList" parameterType="_int" resultType="commentVO">
 			SELECT * FROM TBL_COMMENT WHERE BOARD_NUM = #{num} ORDER BY NUM DESC
 		</select>
+		
+		<insert id="insertLike" parameterType="comLikeVO">
+			INSERT INTO TBL_COM_LIKE (
+			NUM,
+			BOARD_NUM,
+			USER_ID,
+			LIKECHECK
+			) VALUES(
+			SEQ_COMLIKE.NEXTVAL,
+			#{board_num},
+			#{user_id},
+			1
+			)
+		</insert>
+		
+		<select id="searchComLike" parameterType="comLikeVO" resultType="_int">
+			SELECT COUNT(*) FROM TBL_COM_LIKE WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
+		</select>
+		
+		<select id="getComLike" parameterType="map" resultType="Integer">
+			SELECT LIKECHECK FROM TBL_COM_LIKE WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
+		</select>
+		
+		<update id="updateLike" parameterType="comLikeVO">
+			UPDATE TBL_COM_LIKE
+			SET LIKECHECK = #{likecheck}
+			WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
+		</update>
+		
+		<insert id="insertScrap" parameterType="comScrapVO">
+			INSERT INTO TBL_COM_SCRAP (
+			NUM,
+			BOARD_NUM,
+			USER_ID,
+			LIKECHECK
+			) VALUES(
+			SEQ_COMSCRAP.NEXTVAL,
+			#{board_num},
+			#{user_id},
+			1
+			)
+		</insert>
+		
+		<select id="searchComScrap" parameterType="comScrapVO" resultType="_int">
+			SELECT COUNT(*) FROM TBL_COM_SCRAP WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
+		</select>
+		
+		<select id="getComScrap" parameterType="map" resultType="Integer">
+			SELECT LIKECHECK FROM TBL_COM_SCRAP WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
+		</select>
+		
+		<update id="updateScrap" parameterType="comScrapVO">
+			UPDATE TBL_COM_SCRAP
+			SET LIKECHECK = #{likecheck}
+			WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
+		</update>
 	
 	</mapper>

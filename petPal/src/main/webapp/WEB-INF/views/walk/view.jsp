@@ -69,7 +69,7 @@
     <nav id="nav" class="nav">
         <button id="heart" onclick="like('${walkVO.num}')" ><i class="far fa-heart like" id="color"></i></button>
             <div class="btn-box">
-                <a href="profile.html" id="viewProfile">프로필 보기</a>                
+                <a href="/user/profile.do?user_id=${walkVO.user_id}" id="viewProfile">프로필 보기</a>                
             </div>
             <div class="btn-box">
                 <a href="" id="chat">채팅하기</a>
