@@ -1,0 +1,90 @@
+#bar a {
+			font-size: 0.8em !important;
+		}
+
+		#profile input {
+			border: none;
+			width: 100%;
+			background-color: white;
+			margin-top: 0 !important;
+			padding-bottom: 0 !important;
+			padding-left: 0;
+			height: 2.6em;
+			font-size: 0.8em;
+			color: black;
+		}
+
+		form {
+			color: black;
+		}
+
+		input:focus {
+			outline: none;
+		}
+
+		input::placeholder, textarea::placeholder {
+			color: #d9d9d9;
+		}
+
+		form select {
+			background-color: white;
+			padding-right: 0;
+		}
+
+		form select:focus {
+			outline: none;
+			background-color: white;
+		}
+
+		form #date {
+			width: 135px;
+			margin-right: 10px;
+		}
+
+		form #day {
+			width: 35px;
+			padding-left: 5px;
+			padding-top: 2px;
+			margin-right: 10px;
+			padding-bottom: 0;
+			font-size: 0.8em;
+		}
+
+		form #hr, form #mn {
+			width: 35px;
+			padding-left: 5px;
+			padding-top: 2px;
+			padding-bottom: 0;
+			font-size: 0.8em;
+		}
+
+		form #hour, form #minute {
+			padding-top: 0;
+			width: 40px;
+			/* border: solid 1px #d9d9d9; */
+			text-align: center;
+		}
+
+		form #minute {
+			margin-left: 5px;
+		}
+
+		form textarea {
+			height: 60%;
+			resize: none;
+			background-color: white;
+			text-align: left;
+			outline: none;
+			padding-left: 0;
+			color: black;
+			white-space: pre-line;
+			font-size: 0.8em;
+		}
+
+		form textarea:focus {
+			background-color: white;
+		}
+
+		#view-cont {
+			padding-top: 0;
+		}

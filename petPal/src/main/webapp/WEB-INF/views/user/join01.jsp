@@ -1,127 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="path" value="${pageContext.request.contextPath}"/>
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/tagLibrary.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
-		<title>Pet Pal</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="${path}/resources/assets/css/main.css" />
-		<link rel="stylesheet" href="${path}/resources/assets/css/join.css" />
-		<link rel="preconnect" href="https://fonts.gstatic.com">
-		<!-- <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet"> -->
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-		<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
-	<body id="body">
-    <div id="wrapper">
-        <div id="top">
-            <p>회원가입</p>
-            <a href="/user/main.do"><i class="fas fa-times"></i></a>
-        </div>
-        
-        <div id="input">
-        <form id="frm" name="frm" method="post" action="/user/join02.do">
-            <p id="info">집사 정보</p>
-            <div id="id-box">
-                <input id="id" name="user_id" type="text" placeholder="아이디">
-                <a href="javascript:void(0)" onclick="fnCheckId()"><span>중복확인</span> </a>
-            </div>
-            <input name="user_pw" type="password" placeholder="비밀번호" style="margin-bottom: 0;">
-            <p style="font-size: 0.6em; text-align: left; width: 95%; margin: 0 auto;margin-bottom: 5px;">영문 숫자 포함 8자리 이상 15자리 이내</p>
-            <input id="pwcheck" type="password" placeholder="비밀번호 확인">
-            <div id="id-box">
-                <input name="user_name" id="id" type="text" placeholder="닉네임">
-                <a href="javascript:void(0)" onclick="fnCheckNickname()"><span>중복확인</span> </a>
-            </div>
-            <div id="birth-box">
-                <span id="birth-span">생년</br>월일</span>
-                <input name="user_birth" type="date" placeholder="dd" onchange="fnCheckDate(this)">
-            </div>
-            <div id="gender-box">
-                <span>성별</span>
-                <div>
-                    <button type="button" id="gender" onclick="selectGender(this)" value="여자">여자</button>
-                    <button type="button" onclick="selectGender(this)" value="남자">남자</button>
-                    <input type="hidden" name="user_gender">
-                </div>
-            </div>
-            <div id="day-box">
-                <span id="day-span">산책</br>요일</span>
-                <div>
-                    <button type="button" class="day" onclick="selectDay(this)" value="월">월</button>
-                    <button type="button" onclick="selectDay(this)" value="화">화</button>
-                    <button type="button" onclick="selectDay(this)" value="수">수</button>
-                    <button type="button" onclick="selectDay(this)" value="목">목</button>
-                    <button type="button" onclick="selectDay(this)" value="금">금</button>
-                    <button type="button" onclick="selectDay(this)" value="토">토</button>
-                    <button type="button" onclick="selectDay(this)" value="일">일</button>
-                    <input type="hidden" name="walk_day">
-                </div>
-            </div>
-            <div id="time-box">
-                <span id="birth-span">산책시간</span>
-                <!-- <select name="day" id="">
-                    <option value="오전">오전</option>
-                    <option value="오후">오후</option>
-                </select> -->
-                <div>
-                    <button type="button" id="ma" onclick="selectMA(this)" value="오전">오전</button>
-                    <button type="button" onclick="selectMA(this)" value="오후">오후</button>
-                    <input type="hidden" name="walk_time">
-                </div>
-                <select name="walk_hour" id="hr">
-                    <option value="">시</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                </select>
-                <span style="font-size: 0.8em;">&nbsp;: &nbsp;</span>
-                <select name="walk_minute" id="mn">
-                    <option value="">분</option>
-                    <option value="00">00</option>
-                    <option value="30">30</option>
-                    
-                </select>
-            </div>
-            <div id="place-box">
-                <span id="place-span">산책</br>장소</span>
-                <div>
-                    <input name="walk_place1" type="text" placeholder="자주 가는 산책장소를 작성해주세요">
-                    <input name="walk_place2" type="text" placeholder="자주 가는 산책장소를 작성해주세요">
-                </div>
-            </div>
-            <div id="style-box">
-                <span>산책 스타일</span>
-                <textarea name="walk_style" id="style" placeholder="평소 산책 스타일을 적어주세요!"></textarea>
-            </div>
-            <div id="submit-btn">
-                <a href="javascript:void(0)" onclick="submit()" ><span>다음</span></a>
-            </div>
-            </form>
-            </div>
-        </div>
-
-    <!-- Scripts -->
-			<script src="${path}/resources/assets/js/jquery.min.js"></script>
-			<script src="${path}/resources/assets/js/browser.min.js"></script>
-			<script src="${path}/resources/assets/js/breakpoints.min.js"></script>
-			<script src="${path}/resources/assets/js/util.js"></script>
-			<script src="${path}/resources/assets/js/main.js"></script>
-</body>
+<%@ include file="/WEB-INF/views/template/header.jsp"%>
+<link rel="stylesheet" href="${path}/resources/assets/css/join.css" />
+</head>
 <script>   
 
 	var idCheck = false;
@@ -135,7 +20,7 @@
 		nameCheck = false;
 	});
 	
-	fnCheckId = function(){
+	$.fnCheckId = function(){
 		
 		var id = $("input[name='user_id']").val();
 		
@@ -165,7 +50,7 @@
 		
 	};
 	
-	fnCheckDate = function(e){
+	$.fnCheckDate = function(e){
 		
 		var date = new Date(); 
 		var year = date.getFullYear(); 
@@ -188,7 +73,7 @@
 		}
 	};
 	
-	fnCheckNickname = function(){
+	$.fnCheckNickname = function(){
 		
 		var name = $("input[name='user_name']").val();
 		
@@ -219,7 +104,7 @@
 	};
 	
 
-	function submit(){
+	$.fnSubmit = function(){
 		
 		if($("input[name='user_id']").val() == "" || $("input[name='user_pw']").val() == "" || 
 				$("#pwcheck").val() == "" || $("input[name='user_name']").val() == "" || 
@@ -278,12 +163,12 @@
 		frm.submit();
 	}
 
-    function selectGender(e){
+    $.fnSelectGender = function(e){
         $("#gender").attr("id", "");
         $(e).attr("id", "gender");
     }
 
-    function selectDay(e) {
+    $.fnSelectDay = function(e) {
         if($(e).attr("class") == "day"){
             if($(".day").length == 1){
                 alert("최소 한개는 선택해야합니다.")
@@ -297,7 +182,7 @@
         }
     }
 
-    function selectMA(e) {
+    $.fnSelectMA = function(e) {
 
         $("#ma").attr("id", "");
         $(e).attr("id", "ma");
@@ -305,4 +190,114 @@
 
 
 </script>
+<body id="body">
+	<div id="wrapper">
+		<div id="top">
+			<p>회원가입</p>
+			<a href="/user/main.do"><i class="fas fa-times"></i></a>
+		</div>
+
+		<div id="input">
+			<form id="frm" name="frm" method="post" action="/user/join02.do">
+				<p id="info">집사 정보</p>
+				<div id="id-box">
+					<input id="id" name="user_id" type="text" placeholder="아이디">
+					<a href="javascript:void(0)" onclick="$.fnCheckId()"><span>중복확인</span>
+					</a>
+				</div>
+				<input name="user_pw" type="password" placeholder="비밀번호"
+					style="margin-bottom: 0;">
+				<p
+					style="font-size: 0.6em; text-align: left; width: 95%; margin: 0 auto; margin-bottom: 5px;">영문
+					숫자 포함 8자리 이상 15자리 이내</p>
+				<input id="pwcheck" type="password" placeholder="비밀번호 확인">
+				<div id="id-box">
+					<input name="user_name" id="id" type="text" placeholder="닉네임">
+					<a href="javascript:void(0)" onclick="$.fnCheckNickname()"><span>중복확인</span>
+					</a>
+				</div>
+				<div id="birth-box">
+					<span id="birth-span">생년</br>월일
+					</span> <input name="user_birth" type="date" placeholder="dd"
+						onchange="$.fnCheckDate(this)">
+				</div>
+				<div id="gender-box">
+					<span>성별</span>
+					<div>
+						<button type="button" id="gender" onclick="$.fnSelectGender(this)"
+							value="여자">여자</button>
+						<button type="button" onclick="$.fnSelectGender(this)" value="남자">남자</button>
+						<input type="hidden" name="user_gender">
+					</div>
+				</div>
+				<div id="day-box">
+					<span id="day-span">산책</br>요일
+					</span>
+					<div>
+						<button type="button" class="day" onclick="$.fnSelectDay(this)"
+							value="월">월</button>
+						<button type="button" onclick="$.fnSelectDay(this)" value="화">화</button>
+						<button type="button" onclick="$.fnSelectDay(this)" value="수">수</button>
+						<button type="button" onclick="$.fnSelectDay(this)" value="목">목</button>
+						<button type="button" onclick="$.fnSelectDay(this)" value="금">금</button>
+						<button type="button" onclick="$.fnSelectDay(this)" value="토">토</button>
+						<button type="button" onclick="$.fnSelectDay(this)" value="일">일</button>
+						<input type="hidden" name="walk_day">
+					</div>
+				</div>
+				<div id="time-box">
+					<span id="birth-span">산책시간</span>
+					<!-- <select name="day" id="">
+                    <option value="오전">오전</option>
+                    <option value="오후">오후</option>
+                </select> -->
+					<div>
+						<button type="button" id="ma" onclick="$.fnSelectMA(this)"
+							value="오전">오전</button>
+						<button type="button" onclick="$.fnSelectMA(this)" value="오후">오후</button>
+						<input type="hidden" name="walk_time">
+					</div>
+					<select name="walk_hour" id="hr">
+						<option value="">시</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+					</select> <span style="font-size: 0.8em;">&nbsp;: &nbsp;</span> <select
+						name="walk_minute" id="mn">
+						<option value="">분</option>
+						<option value="00">00</option>
+						<option value="30">30</option>
+
+					</select>
+				</div>
+				<div id="place-box">
+					<span id="place-span">산책</br>장소
+					</span>
+					<div>
+						<input name="walk_place1" type="text"
+							placeholder="자주 가는 산책장소를 작성해주세요"> <input
+							name="walk_place2" type="text" placeholder="자주 가는 산책장소를 작성해주세요">
+					</div>
+				</div>
+				<div id="style-box">
+					<span>산책 스타일</span>
+					<textarea name="walk_style" id="style"
+						placeholder="평소 산책 스타일을 적어주세요!"></textarea>
+				</div>
+				<div id="submit-btn">
+					<a href="javascript:void(0)" onclick="$.fnSubmit()"><span>다음</span></a>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
 </html>
