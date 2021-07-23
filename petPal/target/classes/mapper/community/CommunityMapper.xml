@@ -26,6 +26,14 @@
 			
 		</insert>
 		
+		<update id="editCom" parameterType="comVO">
+			UPDATE TBL_BOARD
+			SET "TYPE" = #{type}
+			, CONTENT = #{content}
+			,"DATE" = SYSDATE
+			WHERE NUM = #{num}
+		</update>
+		
 		<select id="selectComList" resultType="comVO">
 		<![CDATA[
 			SELECT
@@ -37,7 +45,7 @@
 			"TYPE", 
 			"FILE",
 			USER_NAME
-			FROM (SELECT * FROM TBL_BOARD WHERE NUM > 0 ORDER BY NUM DESC, "DATE" DESC) WHERE ROWNUM BETWEEN 1 AND 20
+			FROM (SELECT * FROM TBL_BOARD WHERE NUM > 0 ORDER BY "DATE" DESC) WHERE ROWNUM BETWEEN 1 AND 20
 		]]>
 		</select>
 		
@@ -52,9 +60,13 @@
 			"TYPE", 
 			"FILE",
 			USER_NAME
-			FROM TBL_BOARD WHERE NUM <= #{num} AND NUM > #{num}-20 ORDER BY NUM DESC, "DATE" DESC
+			FROM TBL_BOARD WHERE NUM <= #{num} AND NUM > #{num}-20 ORDER BY "DATE" DESC
 		]]>
 		</select>
+		
+		<delete id="deleteCom" parameterType="_int">
+			DELETE FROM TBL_BOARD WHERE NUM = #{num}
+		</delete>
 		
 		<select id="getCom" parameterType="_int" resultType="comVO">
 			SELECT

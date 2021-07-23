@@ -12,6 +12,7 @@ import com.petpal.community.vo.ComScrapVO;
 import com.petpal.community.vo.CommentVO;
 import com.petpal.community.vo.CommunityVO;
 import com.petpal.walk.vo.WalkLikeVO;
+import com.petpal.walk.vo.WalkVO;
 
 @Repository
 public class CommunityDAO {
@@ -23,6 +24,14 @@ public class CommunityDAO {
 	
 	public int insertCommunity(CommunityVO comVO) {
 		return sql.insert(namespace + ".insertCommunity", comVO);
+	}
+	
+	public int editCom(CommunityVO comVO) {
+		return sql.update(namespace + ".editCom", comVO);
+	}
+	
+	public int deleteCom(int num) {
+		return sql.delete(namespace + ".deleteCom", num);
 	}
 	
 	public java.util.List<CommunityVO> selectComList(){

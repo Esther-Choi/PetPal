@@ -1,0 +1,72 @@
+#bar a {
+			font-size: 0.8em !important;
+			color: #999999;
+		}
+
+		#profile input {
+			border: none;
+			width: 100%;
+			background-color: white;
+			margin-top: 0 !important;
+			padding-bottom: 0 !important;
+			padding-left: 0;
+			height: 2.6em;
+			font-size: 1em;
+			color: black;
+		}
+
+		form {
+			color: black;
+		}
+
+		input:focus {
+			outline: none;
+		}
+
+		input::placeholder, textarea::placeholder {
+			color: #d9d9d9;
+		}
+
+		form select {
+			background-color: white;
+			padding-right: 0;
+			color: black;			
+			margin-top: 10px;
+			height: 3.6em;
+			padding-left: 0;
+			font-size: 0.8em;
+		}
+
+		form select:focus {
+			outline: none;
+			background-color: white;
+		}
+
+		form textarea {
+			height: 80%;
+			resize: none;
+			background-color: white;
+			text-align: left;
+			outline: none;
+			padding-left: 0;
+			color: black;
+			white-space: pre-line;
+			padding-top: 20px;
+			font-size: 0.8em;
+		}
+
+		form textarea:focus {
+			background-color: white;
+		}
+
+		#view-cont {
+			padding-top: 0;
+		}
+
+		#nav {
+			border-top: none;
+		}
+
+		#nav #file {
+			background-color: white;
+		}

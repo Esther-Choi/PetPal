@@ -123,11 +123,11 @@
 
 	}
 
-	$(".like").on("click", function() {
-		var i = $(this).children("i");
-		var span = $(this).children("span");
+	$.fnLike = function(e) {
+		var i = $(e).children("i");
+		var span = $(e).children("span");
 		var color = span.attr("class");
-		var num = $(this).attr("num");
+		var num = $(e).attr("num");
 
 		var check = 0;
 		if (color == "active") {
@@ -157,7 +157,7 @@
 			}
 		});
 
-	})
+	}
 </script>
 <body id="body">
 	<%@ include file="/WEB-INF/views/template/top.jsp"%>
@@ -201,12 +201,12 @@
 						<div id="sub">
 							<c:choose>
 								<c:when test="${comVO.likecheck eq 1}">
-									<a href="javascript:void(0)" num="${comVO.num}" class="like"><i
+									<a href="javascript:void(0)" num="${comVO.num}" class="like" onclick = "$.fnLike(this)"><i
 										class="far fa-heart like active"></i><span class="active"
 										id="like-text">좋아요</span></a>
 								</c:when>
 								<c:otherwise>
-									<a href="javascript:void(0)" num="${comVO.num}" class="like"><i
+									<a href="javascript:void(0)" num="${comVO.num}" class="like" onclick = "$.fnLike(this)"><i
 										class="far fa-heart like"></i><span id="like-text">좋아요</span></a>
 								</c:otherwise>
 							</c:choose>

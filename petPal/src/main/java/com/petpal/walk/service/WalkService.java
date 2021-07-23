@@ -25,6 +25,24 @@ public class WalkService {
 		return false;
 	}
 	
+	public boolean editWalk(WalkVO walkVO) {
+		
+		if(walkDAO.editWalk(walkVO) == 1) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean deleteWalk(int numO) {
+		
+		if(walkDAO.deleteWalk(numO) == 1) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public boolean insertLike(WalkLikeVO walkLikeVO) {
 		
 		if(walkDAO.insertLike(walkLikeVO) == 1) {

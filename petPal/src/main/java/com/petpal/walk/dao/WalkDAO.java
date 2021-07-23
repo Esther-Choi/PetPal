@@ -22,6 +22,14 @@ public class WalkDAO {
 		return sql.insert(namespace + ".insertWalk", walkVO);
 	}
 	
+	public int editWalk(WalkVO walkVO) {
+		return sql.update(namespace + ".editWalk", walkVO);
+	}
+	
+	public int deleteWalk(int num) {
+		return sql.delete(namespace + ".deleteWalk", num);
+	}
+	
 	public java.util.List<WalkVO> selectWalkList(){
 		return sql.selectList(namespace + ".selectWalkList");
 	}

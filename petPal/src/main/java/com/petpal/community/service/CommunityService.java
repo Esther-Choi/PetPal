@@ -27,6 +27,22 @@ public class CommunityService {
 		return false;
 	}
 	
+	public boolean editCom(CommunityVO comVO) {
+		if(comDAO.editCom(comVO) == 1) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean deleteCom(int num) {
+		if(comDAO.deleteCom(num) == 1) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public List<CommunityVO> selectComList(){
 		return comDAO.selectComList();
 	}

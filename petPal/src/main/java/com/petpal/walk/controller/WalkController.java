@@ -1,11 +1,13 @@
 package com.petpal.walk.controller;
 
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +26,7 @@ import com.petpal.user.controller.UserController;
 import com.petpal.user.service.UserService;
 import com.petpal.user.vo.PetVO;
 import com.petpal.user.vo.UserVO;
+import com.petpal.utils.ScriptUtils;
 import com.petpal.walk.service.WalkService;
 import com.petpal.walk.vo.WalkLikeVO;
 import com.petpal.walk.vo.WalkVO;
@@ -46,10 +50,21 @@ public class WalkController {
 	private String uploadPath;
 
 	
-	@RequestMapping(value = "form.do")
-	public String form() throws Exception{
+	@RequestMapping(value = "form.do", method = RequestMethod.GET)
+	public String form(
+//			@ModelAttribute WalkVO walkVO,
+			@RequestParam(defaultValue = "0") int num,
+			Model model
+			) throws Exception{
 		
 		LOGGER.info("form");
+		
+		if(num != 0) {
+			
+			WalkVO walkVO = walkService.getWalk(num);
+			model.addAttribute("walkVO", walkVO);
+		}
+			
 		return "/walk/form";
 	}
 	
@@ -58,7 +73,6 @@ public class WalkController {
 			@ModelAttribute WalkVO walkVO,
 			HttpSession session
 			) throws Exception{
-		
 		String user_id = (String)session.getAttribute("user_id");
 		if(user_id == null) {
 			LOGGER.info("no session");
@@ -83,6 +97,54 @@ public class WalkController {
 		}
 		
 		return "error";
+	}
+	
+	@RequestMapping(value="editWalk.do", method = RequestMethod.POST)
+	public String editWalk(
+			@ModelAttribute WalkVO walkVO,
+			@RequestParam(defaultValue = "0") int num,
+			HttpSession session
+			) throws Exception{
+		
+		String user_id = (String)session.getAttribute("user_id");
+		if(user_id == null) {
+			LOGGER.info("no session");
+			return "redirect:/user/main.do";
+		}
+		LOGGER.info("edittWalk");
+		
+		try {
+			walkVO.setNum(num);
+			if(walkService.editWalk(walkVO)) {
+				
+				return "redirect:/walk/view.do?num="+walkVO.getNum();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		
+		}
+		return "error";
+	}
+	
+	@RequestMapping(value="delete.do", method = RequestMethod.GET)
+	public String deleteWalk(
+			@RequestParam("num") int num,
+			HttpServletResponse response
+			) throws Exception {
+		
+		LOGGER.info("deleteWalk");
+		try {
+			
+			if(walkService.deleteWalk(num)) {
+				return "redirect:/walk/list.do";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "error";
+		
 	}
 	
 	@RequestMapping(value = "list.do", method = RequestMethod.GET)
@@ -213,6 +275,7 @@ public class WalkController {
 		model.addAttribute("walkVO", walk);
 		model.addAttribute("userVO", user);
 		model.addAttribute("address", userService.getPet(walk.getUser_id()).getAddress());
+		model.addAttribute("user_id", user_id);
 		
 		
 		return "/walk/view";

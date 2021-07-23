@@ -11,6 +11,11 @@
 	
 	
 		$.fnSubmit = function(){
+			if($("#num").val() == ""){
+				$("form[name=frm]").attr("action", "/walk/insertWalk.do");
+			}else {
+				$("form[name=frm]").attr("action", "/walk/editWalk.do?num="+$("#num").val());
+			}
 			frm.submit();
 		}
 		
@@ -30,44 +35,45 @@
 				<a href="javascript:void(0)" onclick="$.fnSubmit()">완료</a>
 			</div>
 		</div>
-		<form id="view-cont" name="frm" action="/walk/insertWalk.do"
+		<input type="hidden" name="num" id="num" value="${walkVO.num}">
+		<form id="view-cont" name="frm"
 			method="post">
 			<div id="profile">
-				<input name="title" type="text" placeholder="글 제목">
+				<input name="title" type="text" placeholder="글 제목" value="${walkVO.title}">
 			</div>
 			<div id="profile">
 				<input name="location" type="text"
-					placeholder="산책 장소 (간단하게 장소명을 적어주세요)">
+					placeholder="산책 장소 (간단하게 장소명을 적어주세요)" value="${walkVO.location}">
 			</div>
 			<div id="profile">
 				<input name="date" type="date" name="date" id="date"
-					style="width: 50%; margin-right: 20px;"> <select
+					style="width: 50%; margin-right: 20px;" value="${fn:substring(walkVO.date,0, 10)}"> <select
 					name="walk_time" id="day">
-					<option value="오전">오전</option>
-					<option value="오후">오후</option>
+					<option value="오전" ${walkVO.walk_time eq '오전' ? "selected='selected'":""}>오전</option>
+					<option value="오후" ${walkVO.walk_time eq '오후' ? "selected='selected'":""}>오후</option>
 				</select> <select name="walk_hour" id="hr">
 					<option value="">시</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-					<option value="11">11</option>
-					<option value="12">12</option>
+					<option value="1" ${walkVO.walk_hour eq '1' ? "selected='selected'":""}>1</option>
+					<option value="2" ${walkVO.walk_hour eq '2' ? "selected='selected'":""}>2</option>
+					<option value="3" ${walkVO.walk_hour eq '3' ? "selected='selected'":""}>3</option>
+					<option value="4" ${walkVO.walk_hour eq '4' ? "selected='selected'":""}>4</option>
+					<option value="5" ${walkVO.walk_hour eq '5' ? "selected='selected'":""}>5</option>
+					<option value="6" ${walkVO.walk_hour eq '6' ? "selected='selected'":""}>6</option>
+					<option value="7" ${walkVO.walk_hour eq '7' ? "selected='selected'":""}>7</option>
+					<option value="8" ${walkVO.walk_hour eq '8' ? "selected='selected'":""}>8</option>
+					<option value="9" ${walkVO.walk_hour eq '9' ? "selected='selected'":""}>9</option>
+					<option value="10" ${walkVO.walk_hour eq '10' ? "selected='selected'":""}>10</option>
+					<option value="11" ${walkVO.walk_hour eq '11' ? "selected='selected'":""}>11</option>
+					<option value="12" ${walkVO.walk_hour eq '12' ? "selected='selected'":""}>12</option>
 				</select> <span> : &nbsp;</span> <select name="walk_minute" id="mn">
 					<option value="">분</option>
-					<option value="00">00</option>
-					<option value="30">30</option>
+					<option value="00" ${walkVO.walk_minute eq '0' ? "selected='selected'":""}>00</option>
+					<option value="30" ${walkVO.walk_minute eq '30' ? "selected='selected'":""}>30</option>
 
 				</select>
 			</div>
 			<textarea name="content" id="" cols="30"
-				placeholder="이번 산책에 대해 설명해주세요!"></textarea>
+				placeholder="이번 산책에 대해 설명해주세요!">${walkVO.content}</textarea>
 		</form>
 
 	</div>

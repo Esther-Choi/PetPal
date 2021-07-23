@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ import com.petpal.community.vo.CommunityVO;
 import com.petpal.user.controller.UserController;
 import com.petpal.user.service.UserService;
 import com.petpal.user.vo.UserVO;
+import com.petpal.walk.vo.WalkVO;
 
 @Controller
 @RequestMapping("/com/*")
@@ -69,11 +71,69 @@ public class CommunityController {
 		return "error";
 	}
 	
+	@RequestMapping(value="editCom.do", method = RequestMethod.POST)
+	public String editWalk(
+			@ModelAttribute CommunityVO comVO,
+			@RequestParam(defaultValue = "0") int num,
+			HttpSession session
+			) throws Exception{
+		
+		String user_id = (String)session.getAttribute("user_id");
+		if(user_id == null) {
+			LOGGER.info("no session");
+			return "redirect:/user/main.do";
+		}
+		LOGGER.info("edittWalk");
+		
+		try {
+			comVO.setNum(num);
+			if(comService.editCom(comVO)) {
+				
+				return "redirect:/com/view.do?num="+comVO.getNum();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		
+		}
+		return "error";
+	}
+	
+	@RequestMapping(value="delete.do", method = RequestMethod.GET)
+	public String deleteWalk(
+			@RequestParam("num") int num,
+			HttpServletResponse response
+			) throws Exception {
+		
+		LOGGER.info("deleteWalk");
+		try {
+			
+			if(comService.deleteCom(num)) {
+				return "redirect:/com/list.do";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "error";
+		
+	}
+	
 	
 	@RequestMapping(value = "form.do")
-	public String form() throws Exception{
+	public String form(
+			@RequestParam(defaultValue = "0") int num,
+			Model model
+			) throws Exception{
 		
 		LOGGER.info("community form");
+		
+		if(num != 0) {
+			
+			CommunityVO comVO = comService.getCom(num);
+			model.addAttribute("comVO", comVO);
+		}
+		
 		return "/community/form";
 	}
 
@@ -251,6 +311,7 @@ public class CommunityController {
 		model.addAttribute("userVO", user);
 		model.addAttribute("address", userService.getPet(comVO.getUser_id()).getAddress());
 		model.addAttribute("thumb", userService.getPet(comVO.getUser_id()).getPet_photothumb());
+		model.addAttribute("user_id", user_id);
 		
 		return "/community/view";
 	}

@@ -22,13 +22,7 @@
 		}else {
 			$(".scrap").css("color", "#737373");
 		}
-	});
-
-	
-	$(function(){
-		getCommentList();
-	});
-
+		
 		$("#input").on("change keyup paste", function(){
 			if($("#input").val() == ""){
 				$("#sendBtn").hide();
@@ -36,8 +30,16 @@
 				$("#sendBtn").css("display", "flex");
 			}
 		})
+	});
+
+	
+		$(function(){
+			getCommentList();
+		});
+
 		
-		$("#sendBtn").on("click", function(){
+		
+		$.fnSendComment = function(){
 			$.ajax({
 				type: 'GET',
 				url: "/com/insertComment.do",
@@ -53,7 +55,7 @@
 					alert("댓글 작성 실패. 잠시 후 다시 시도해 주세요")
 				}
 			});
-		});
+		};
 		
 		
 		function getCommentList(){
@@ -104,41 +106,41 @@
 			$("input").focus();
 		}
 		
-		$(".like").on("click", function(){
-			var i = $(this).children("i");
-			var span = $(this).children("span");
+		 $.fnLike = function(e) {
+			var i = $(e).children("i");
+			var span = $(e).children("span");
 			var color = span.attr("class");
-			var num = $(this).attr("num");
-			
+			var num = $(e).attr("num");
+
 			var check = 0;
-    		if(color == "active"){
+			if (color == "active") {
 				check = 0;
-			}else {
+			} else {
 				check = 1;
 			}
-    		$.ajax({
-    			type: 'GET',
-    			url : "/com/likeCom.do?num="+num+"&check="+check,
-    			success : function(data){
-    				if(data == "success"){
-    					if(color == "active"){
-    						i.attr("class", "far fa-heart like");
-    						span.attr("class", "");
-    					}else {
-    						i.attr("class", "far fa-heart like active");
-    						span.attr("class", "active");
+			$.ajax({
+				type : 'GET',
+				url : "/com/likeCom.do?num=" + num + "&check=" + check,
+				success : function(data) {
+					if (data == "success") {
+						if (color == "active") {
+							i.attr("class", "far fa-heart like");
+							span.attr("class", "");
+						} else {
+							i.attr("class", "far fa-heart like active");
+							span.attr("class", "active");
 
-    					}
-    				}
-    			},
-    			error : function(){
-    				console.log("error")
+						}
+					}
+				},
+				error : function() {
+					console.log("error")
 					alert("좋아요 실패. 잠시 후 다시 시도해 주세요")
-				
-    			}
-    		});
 
-		})
+				}
+			});
+
+		}
 		
 		function scrap(num){
     		var check = 0;
@@ -168,6 +170,13 @@
     		
 		}
 		
+		$.fnDeleteCheck = function(num){
+			var check = confirm("게시글을 정말 삭제하시겠어요?");
+			if(check){
+				location.href = '/com/delete.do?num='+num;
+			}
+		}
+		
 	</script>
 <body id="body">
 	<%@ include file="/WEB-INF/views/template/top.jsp"%>
@@ -182,10 +191,16 @@
 				<a href="/com/list.do"><i class="fas fa-arrow-left"></i></a>
 			</div>
 			<div
-				style="width: 20px; display: flex; justify-content: space-between;">
-				<a href="javascript:void(0)" onclick="scrap('${comVO.num}')"
-					id="save"><i class="far fa-heart scrap"
-					style="font-size: 18px;"></i></a>
+				style="width: 50px; display: flex; justify-content:flex-end; align-content: center;  align-items: center;">
+				<c:if test="${comVO.user_id eq user_id}">
+					<a href="/com/form.do?num=${comVO.num}" style="margin-right: 25px; padding-bottom: 3px"><i class="far fa-edit"></i></a>
+					<a href="javascript:void(0)" onclick="$.fnDeleteCheck('${comVO.num}')"><i class="far fa-trash-alt"></i></a>
+				</c:if>
+				<c:if test="${comVO.user_id ne user_id}">
+					<a href="javascript:void(0)" onclick="scrap('${comVO.num}')"
+						id="save"><i class="far fa-heart scrap"
+						style="font-size: 18px;"></i></a>
+				</c:if>
 			</div>
 		</div>
 		<div id="view-cont">
@@ -207,12 +222,12 @@
 			<div id="sub">
 				<c:choose>
 					<c:when test="${comVO.likecheck eq 1}">
-						<a href="javascript:void(0)" num="${comVO.num}" class="like"><i
+						<a href="javascript:void(0)" num="${comVO.num}" class="like" onclick="$.fnLike(this)"><i
 							class="far fa-heart like active"></i><span class="active"
 							id="like-text">좋아요</span></a>
 					</c:when>
 					<c:otherwise>
-						<a href="javascript:void(0)" num="${comVO.num}" class="like"><i
+						<a href="javascript:void(0)" num="${comVO.num}" class="like" onclick="$.fnLike(this)"><i
 							class="far fa-heart like"></i><span id="like-text">좋아요</span></a>
 					</c:otherwise>
 				</c:choose>
@@ -229,7 +244,7 @@
 			<input type="hidden" id="board_num" name="board_num"
 				value="${comVO.num}"> <input type="text" id="input"
 				name="content" placeholder="따뜻한 댓글을 입력해주세요 :D"> <a
-				href="javascript:void(0)" id="sendBtn"><i
+				href="javascript:void(0)" id="sendBtn" onclick = "$.fnSendComment()"><i
 				class="fas fa-arrow-right"></i></a>
 		</form>
 

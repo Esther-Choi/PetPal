@@ -46,19 +46,48 @@
 		});
 
 	}
+	
+	$.fnForm = function(num) {
+		$("#frm").attr("method", "get");
+		$("#frm").attr("action", "/walk/form.do?"+num);
+		$("#frm").submit();
+	}
+	
+	$.fnDeleteCheck = function(num){
+		var check = confirm("게시글을 정말 삭제하시겠어요?");
+		if(check){
+			location.href = '/walk/delete.do?num='+num;
+		}
+	}
 </script>
 <body>
 	<%@ include file="/WEB-INF/views/template/top.jsp"%>
 
 	<input type="hidden" value="${check}" id="check">
+	<form id="frm" name="frm">
+		<input type="hidden" value="${walkVO.num}">
+<%-- 		<input type="hidden" value="${walkVO.title}">
+		<input type="hidden" value="${walkVO.location}">
+		<input type="hidden" value="${walkVO.date}">
+		<input type="hidden" value="${walkVO.walk_time}">
+		<input type="hidden" value="${walkVO.walk_hour}">
+		<input type="hidden" value="${walkVO.walk_minute}">
+		<input type="hidden" value="${walkVO.content}"> --%>
+	</form>
 	<div id="wrapper" style="padding-top: 10px;">
 		<div id="bar"
 			style="border-bottom: none; padding-top: 2px; padding-bottom: 10px; margin-bottom: 0;">
 			<div
 				style="display: flex; align-items: center; position: relative; z-index: 4; justify-content: space-between; width: 100%;">
-				<a href="javascript:void(0)" onclick="$.fnBack()"><i
+				<a href="/walk/list.do"><i
 					class="fas fa-arrow-left"></i></a>
-
+				<div
+				style="width: 50px; display: flex; justify-content:flex-end; align-content: center;  align-items: center;">
+				<c:if test="${walkVO.user_id eq user_id}">
+					<a href="/walk/form.do?num=${walkVO.num}" style="margin-right: 25px"><i class="far fa-edit"></i></a>
+					<a href="javascript:void(0)" onclick="$.fnDeleteCheck('${walkVO.num}')"><i class="far fa-trash-alt"></i></a>
+				</c:if>
+				</div>
 			</div>
 		</div>
 		<div

@@ -36,6 +36,23 @@
 			
 		</insert>
 		
+		<update id="editWalk" parameterType="walkVO">
+			UPDATE TBL_WALK
+			SET TITLE = #{title}
+			, LOCATION = #{location}
+			, "DATE" = #{date}
+			, WALK_TIME = #{walk_time}
+			, WALK_HOUR = #{walk_hour}
+			, WALK_MINUTE = #{walk_minute}
+			, CONTENT = #{content}
+			, REG_DATE = SYSDATE
+			WHERE NUM = #{num}
+		</update>
+		
+		<delete id="deleteWalk" parameterType="_int">
+			DELETE FROM TBL_WALK WHERE NUM = #{num}
+		</delete>
+		
 		<select id="selectWalkList" resultType="walkVO">
 		<![CDATA[
 			SELECT
@@ -52,7 +69,7 @@
 			THUMB,
 			AGE,
 			BREED
-			FROM (SELECT * FROM TBL_WALK WHERE NUM > 0 ORDER BY NUM DESC, REG_DATE DESC) WHERE ROWNUM BETWEEN 1 AND 20
+			FROM (SELECT * FROM TBL_WALK WHERE NUM > 0 ORDER BY REG_DATE DESC) WHERE ROWNUM BETWEEN 1 AND 20
 		]]>
 		</select>
 		
@@ -72,7 +89,7 @@
 			THUMB,
 			AGE,
 			BREED
-			FROM TBL_WALK WHERE NUM <= #{num} AND NUM > #{num}-20 ORDER BY NUM DESC, REG_DATE DESC
+			FROM TBL_WALK WHERE NUM <= #{num} AND NUM > #{num}-20 ORDER BY REG_DATE DESC
 		]]>
 		</select>
 		

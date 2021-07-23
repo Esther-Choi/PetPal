@@ -85,7 +85,6 @@
 				if(scrollTop + height >= scrollHeight){
 				
 					var lastnum = $(".scrolling:last").attr("num");
-					console.log(lastnum);
 					// ajax를 이용해서 현재 뿌려진 게시글의 마지막 num을 서버로 보내어 그 다음 20개의 게시물 데이터를 받아온다.
 					$.ajax({
 						type : 'post',
