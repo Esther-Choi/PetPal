@@ -104,7 +104,7 @@
                         <a href="/mypage/scrap/walk/list.do"><span class="active">산책</span></a>
                     </div>
                     <div>
-                        <a href="/mypage/scrap/community/list.do"><span>커뮤니티</span></a>
+                        <a href="/mypage/scrap/community/list.do" ><span>커뮤니티</span></a>
                     </div>
                 </div>
 					<c:choose>
