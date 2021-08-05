@@ -154,7 +154,7 @@ input {
     justify-content: space-between;
 }
 
-#gender, .day, #ma, .character {
+#gender, #pet_gender, .day, #ma, #surgery, .character {
     background-color: #ffa64d !important;
 }
 

@@ -1,0 +1,45 @@
+#bar {
+    border-bottom: none !important;
+}
+
+.title {
+    width: 90%; font-size: 0.9em; color: black;
+}
+
+.category-div {
+    margin-top: 31px; 
+    display: flex; 
+    width: 100%;
+    padding-top: 10px;
+}
+
+.category-div div {
+    width: 50%; 
+    text-align: center;
+    font-size: 0.8em;
+    padding-bottom: 5px;
+    color: #a6a6a6;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+a {
+    text-decoration: none;
+    color: #a6a6a6;
+}
+
+.active-div {
+    border-bottom: 2px solid black !important;
+    color: black !important;
+}
+
+.active {
+    color: black !important;
+}
+
+#list {
+    margin-top: 0 !important;
+}
+
+#cont-list {
+    margin-top: 0 !important;
+}

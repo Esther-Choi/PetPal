@@ -47,8 +47,24 @@ public class CommunityService {
 		return comDAO.selectComList();
 	}
 	
+	public List<CommunityVO> selectMyComList(String user_id){
+		return comDAO.selectMyComList(user_id);
+	}
+	
+	public List<CommunityVO> selectMyComScrap(String user_id){
+		return comDAO.selectMyComScrap(user_id);
+	}
+	
 	public List<CommunityVO> scrollDown(int num){
 		return comDAO.scrollDown(num);
+	}
+	
+	public List<CommunityVO> scrollDownMy(HashMap<String, Object> map){
+		return comDAO.scrollDownMy(map);
+	}
+	
+	public List<CommunityVO> scrollDownMyScrap(HashMap<String, Object> map){
+		return comDAO.scrollDownMyScrap(map);
 	}
 	
 	public CommunityVO getCom(int num) {

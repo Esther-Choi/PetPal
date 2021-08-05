@@ -65,9 +65,26 @@ public class WalkService {
 		return walkDAO.selectWalkList();
 	}
 	
+	public List<WalkVO> selectMyWalkList(String user_id){
+		return walkDAO.selectMyWalkList(user_id);
+	}
+	
+	public List<WalkVO> selectMyWalkScrap(String user_id){
+		return walkDAO.selectMyWalkScrap(user_id);
+	}
+	
 	public List<WalkVO> scrollDown(int num){
 		return walkDAO.scrollDown(num);
 	}
+	
+	public List<WalkVO> scrollDownMy(HashMap<String, Object> map){
+		return walkDAO.scrollDownMy(map);
+	}
+	
+	public List<WalkVO> scrollDownMyScrap(HashMap<String, Object> map){
+		return walkDAO.scrollDownMyScrap(map);
+	}
+	
 	public WalkVO getWalk(int num) {
 		return walkDAO.getWalk(num);
 	}

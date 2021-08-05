@@ -32,7 +32,7 @@
 			<ul class="listToChange">
 				<c:forEach items="${list}" var="walkVO">
 					<li id="list-content" class="scrolling" num="${walkVO.num}"><a
-						href="/walk/view.do?num=${walkVO.num}"><img
+						href="/walk/view.do?num=${walkVO.num}&&prev="><img
 							src="${walkVO.thumb}" alt="">
 							<div id="content">
 								<span id="title">${walkVO.title}</span>
@@ -59,7 +59,7 @@
 				class="fas fa-bullhorn"></i>
 			<p>커뮤니티</p></a> <a href="#contact" class="icon solid"><i
 				class="far fa-comment-alt"></i>
-			<p>채팅</p></a> <a href="mypage.html" class="icon brands"><i
+			<p>채팅</p></a> <a href="/mypage/main.do" class="icon brands"><i
 				class="far fa-user"></i>
 			<p>나의 펫팔</p></a>
 		</nav>

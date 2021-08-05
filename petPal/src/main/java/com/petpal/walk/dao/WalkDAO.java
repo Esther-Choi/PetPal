@@ -34,8 +34,24 @@ public class WalkDAO {
 		return sql.selectList(namespace + ".selectWalkList");
 	}
 	
+	public java.util.List<WalkVO> selectMyWalkList(String user_id){
+		return sql.selectList(namespace + ".selectMyWalkList", user_id);
+	}
+	
+	public java.util.List<WalkVO> selectMyWalkScrap(String user_id){
+		return sql.selectList(namespace + ".selectMyWalkScrap", user_id);
+	}
+	
 	public List<WalkVO> scrollDown(int num){
 		return sql.selectList(namespace + ".scrollDown", num);
+	}
+	
+	public List<WalkVO> scrollDownMy(HashMap<String, Object> map){
+		return sql.selectList(namespace + ".scrollDownMy", map);
+	}
+	
+	public List<WalkVO> scrollDownMyScrap(HashMap<String, Object> map){
+		return sql.selectList(namespace + ".scrollDownMyScrap", map);
 	}
 	
 	public WalkVO getWalk(int num) {

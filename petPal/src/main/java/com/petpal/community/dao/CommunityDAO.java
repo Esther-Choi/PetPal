@@ -38,8 +38,24 @@ public class CommunityDAO {
 		return sql.selectList(namespace + ".selectComList");
 	}
 	
+	public java.util.List<CommunityVO> selectMyComList(String user_id){
+		return sql.selectList(namespace + ".selectMyComList", user_id);
+	}
+	
+	public java.util.List<CommunityVO> selectMyComScrap(String user_id){
+		return sql.selectList(namespace + ".selectMyComScrap", user_id);
+	}
+	
 	public List<CommunityVO> scrollDown(int num){
 		return sql.selectList(namespace + ".scrollDown", num);
+	}
+	
+	public List<CommunityVO> scrollDownMy(HashMap<String, Object> map){
+		return sql.selectList(namespace + ".scrollDownMy", map);
+	}
+	
+	public List<CommunityVO> scrollDownMyScrap(HashMap<String, Object> map){
+		return sql.selectList(namespace + ".scrollDownMyScrap", map);
 	}
 	
 	public CommunityVO getCom(int num) {

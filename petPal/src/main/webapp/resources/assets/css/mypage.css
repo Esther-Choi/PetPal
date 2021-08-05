@@ -89,3 +89,14 @@
     color: #cccccc;
     margin-right: 12px;
 }
+
+#nolist {
+	background-color: rgb(230, 230, 230, 0.5); 
+	color:  #8c8c8c; 
+	font-weight: 400; 
+	width: 100vw; 
+	height: 100vh; 
+	display: flex; 
+	justify-content: center; 
+	align-items: center;
+}

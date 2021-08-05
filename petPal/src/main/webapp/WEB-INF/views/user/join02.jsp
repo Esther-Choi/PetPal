@@ -24,6 +24,7 @@
 	                reader.readAsDataURL(this.files[0]);
 	            }
 	        });
+	});
 		
 		$.fnSubmitForm = function(){			
 			

@@ -1,0 +1,61 @@
+#pet-list {
+    margin-top: 31px;
+    width: 95%;
+}
+
+#pet-list ul {
+    list-style: none;
+}
+
+.profile {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile>a {
+    width: 70%;
+}
+
+.profile-div {
+    display: flex;
+}
+
+.profile img {
+    width: 3.8em;
+    border-radius: 50% !important;
+}
+
+.profile .a-div{
+    background-color: #ffa64d;
+    border-radius: 5px;
+}
+
+.a-div a {
+    color: white;
+    padding: 10px 15px;
+    font-size: 0.8em;
+}
+
+.name {
+    display: flex;
+    justify-content: center;
+    margin-left: 10px;
+    flex-direction: column;
+}
+
+#petname {
+    font-size: 0.8em;
+    color: black;
+    line-height: 1.2;
+}
+
+#nickname {
+    font-size: 0.7em;
+    color: #a6a6a6;
+}
+
+a {
+    text-decoration: none;
+}

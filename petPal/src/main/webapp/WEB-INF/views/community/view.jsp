@@ -170,10 +170,10 @@
     		
 		}
 		
-		$.fnDeleteCheck = function(num){
+		$.fnDeleteCheck = function(num, prev){
 			var check = confirm("게시글을 정말 삭제하시겠어요?");
 			if(check){
-				location.href = '/com/delete.do?num='+num;
+				location.href = '/com/delete.do?num='+num+'&&prev='+prev;
 			}
 		}
 		
@@ -188,13 +188,13 @@
 		<div id="bar" style="background-color: white;">
 			<div
 				style="display: flex; align-items: center; position: relative; z-index: 4;">
-				<a href="/com/list.do"><i class="fas fa-arrow-left"></i></a>
+				<a href="javascript:void(0)" onclick="$.fnBack()"><i class="fas fa-arrow-left"></i></a>
 			</div>
 			<div
 				style="width: 50px; display: flex; justify-content:flex-end; align-content: center;  align-items: center;">
 				<c:if test="${comVO.user_id eq user_id}">
 					<a href="/com/form.do?num=${comVO.num}" style="margin-right: 25px; padding-bottom: 3px"><i class="far fa-edit"></i></a>
-					<a href="javascript:void(0)" onclick="$.fnDeleteCheck('${comVO.num}')"><i class="far fa-trash-alt"></i></a>
+					<a href="javascript:void(0)" onclick="$.fnDeleteCheck('${comVO.num}', '${prev}')"><i class="far fa-trash-alt"></i></a>
 				</c:if>
 				<c:if test="${comVO.user_id ne user_id}">
 					<a href="javascript:void(0)" onclick="scrap('${comVO.num}')"

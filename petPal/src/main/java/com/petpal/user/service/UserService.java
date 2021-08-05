@@ -43,6 +43,22 @@ public class UserService {
 		return "no";
 	}
 	
+	public boolean editUser(UserVO userVO) {
+		if(userDAO.editUser(userVO) == 1) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean editPet(PetVO petVO) {
+		if(userDAO.editPet(petVO) == 1) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public UserVO login(String user_id) {
 		
 		return userDAO.login(user_id);

@@ -91,4 +91,18 @@
     padding: 0 1.5em;
 }
 
+.edit-btn {
+    background-color: #ffa64d;
+    height: 2.1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.edit-btn a {
+    color: white !important;
+}
+
 

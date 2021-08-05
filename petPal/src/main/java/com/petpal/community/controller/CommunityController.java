@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -102,6 +103,7 @@ public class CommunityController {
 	@RequestMapping(value="delete.do", method = RequestMethod.GET)
 	public String deleteWalk(
 			@RequestParam("num") int num,
+			@RequestParam("prev") String prev,
 			HttpServletResponse response
 			) throws Exception {
 		
@@ -109,7 +111,13 @@ public class CommunityController {
 		try {
 			
 			if(comService.deleteCom(num)) {
-				return "redirect:/com/list.do";
+				if(prev.equals("my")) {
+					
+					return "redirect:/mypage/mycommunity.do";
+				}else {
+					
+					return "redirect:/com/list.do";
+				}
 			}
 			
 		} catch (Exception e) {
@@ -252,7 +260,7 @@ public class CommunityController {
 	}
 	
 	@RequestMapping(value="view.do", method = RequestMethod.GET)
-	public String getCom(@RequestParam("num") int num, Model model, HttpSession session) throws Exception {
+	public String getCom(@RequestParam("num") int num, @RequestParam("prev") String prev, Model model, HttpSession session) throws Exception {
 		
 		String user_id = (String)session.getAttribute("user_id");
 		if(user_id == null) {
@@ -312,6 +320,7 @@ public class CommunityController {
 		model.addAttribute("address", userService.getPet(comVO.getUser_id()).getAddress());
 		model.addAttribute("thumb", userService.getPet(comVO.getUser_id()).getPet_photothumb());
 		model.addAttribute("user_id", user_id);
+		model.addAttribute("prev", prev);
 		
 		return "/community/view";
 	}

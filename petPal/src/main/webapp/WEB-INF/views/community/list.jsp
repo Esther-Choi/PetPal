@@ -28,14 +28,14 @@
 							// $(".toolip").slideUp();
 						})
 
-						$("#list")
+						$("#cont-list")
 								.scroll(
 										function() {
 
-											var scrollTop = $("#list")
+											var scrollTop = $("#cont-list")
 													.scrollTop();
-											var height = $("#list").height();
-											var scrollHeight = $("#list").prop(
+											var height = $("#cont-list").height();
+											var scrollHeight = $("#cont-list").prop(
 													'scrollHeight');
 
 											if (scrollTop + height >= scrollHeight) {
@@ -63,17 +63,17 @@
 																						str += "<li id='list-content' class='scrolling' num='"+this.num+"'>"
 																								+ "<a href='/com/view.do?num="
 																								+ this.num
-																								+ "'>"
+																								+ "&&prev='>"
 																								+ "<div id='content'>"
 																								+ "<span id = 'com-type'>"
 																								+ this.type
 																								+ "</span>"
 																								+ "<p id='title'>"
-																								+ this.title
+																								+ this.content
 																								+ "</p>"
 																								+ "<ul>"
 																								+ "<li><span id='writer'>"
-																								+ this.user_id
+																								+ this.user_name
 																								+ "</span></li>"
 																								+ "<li><span>&#183;</span></li>"
 																								+ "<li><span id='date'>"
@@ -81,13 +81,13 @@
 																								+ "</span></li>"
 																								+ "</ul>"
 																								+ "</div></a>"
-																								+ "<div id='sub'>"
-																						if (this.likecheck == 1) {
-																							+"<a href='javascript:void(0)' class='like'><i class='far fa-heart like active'></i><span class='active' id='like-text'>좋아요</span></a>"
+																								+ "<div id='sub'>";
+																						if(this.likecheck == 1) {
+																							str += "<a href='javascript:void(0)' class='like'><i class='far fa-heart like active'></i><span class='active' id='like-text'>좋아요</span></a>"
 																						} else {
-																							+"<a href='javascript:void(0)' class='like'><i class='far fa-heart like'></i><span id='like-text'>좋아요</span></a>"
+																							str += "<a href='javascript:void(0)' class='like'><i class='far fa-heart like'></i><span id='like-text'>좋아요</span></a>"
 																						}
-																						+"<a href='com_view.html'><i class='far fa-comment'></i>댓글쓰기</a>"
+																						str += "<a href='com_view.html'><i class='far fa-comment'></i>댓글쓰기</a>"
 																								+ "</div></li>";
 																					});
 																	//이전까지 뿌려졌던 데이터는 비워주고, <ul>헤더에 위에 만든 str을 뿌려준다
@@ -186,8 +186,8 @@
 		<div id="cont-list">
 			<ul class="listToChange">
 				<c:forEach items="${lists}" var="comVO">
-					<li id="list-content" class="scrolling"><a
-						href="/com/view.do?num=${comVO.num}">
+					<li id="list-content" class="scrolling" num="${comVO.num}"><a
+						href="/com/view.do?num=${comVO.num}&&prev=">
 							<div id="content">
 								<span id="com-type">${comVO.type}</span>
 								<p id="title">${comVO.content}</p>
@@ -226,7 +226,7 @@
 				class="fas fa-bullhorn"></i>
 				<p>커뮤니티</p></a> <a href="#contact" class="icon solid""><i
 				class="far fa-comment-alt"></i>
-				<p>채팅</p></a> <a href="mypage.html" class="icon brands"><i
+				<p>채팅</p></a> <a href="/mypage/main.do" class="icon brands"><i
 				class="far fa-user"></i>
 				<p>나의 펫팔</p></a>
 		</nav>

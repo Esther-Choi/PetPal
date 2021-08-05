@@ -49,6 +49,37 @@
 		]]>
 		</select>
 		
+		<select id="selectMyComList" resultType="comVO" parameterType="string">
+		<![CDATA[
+			SELECT
+			NUM, 
+			USER_ID, 
+			CONTENT, 
+			LIKE_CNT, 
+			"DATE", 
+			"TYPE", 
+			"FILE",
+			USER_NAME
+			FROM (SELECT * FROM TBL_BOARD WHERE NUM > 0 ORDER BY "DATE" DESC) WHERE ROWNUM BETWEEN 1 AND 20 AND USER_ID = #{user_id}
+		]]>
+		</select>
+		
+		<select id="selectMyComScrap" resultType="comVO" parameterType="string">
+		<![CDATA[
+			SELECT
+			B.NUM, 
+			B.USER_ID, 
+			CONTENT, 
+			LIKE_CNT, 
+			"DATE", 
+			"TYPE", 
+			"FILE",
+			USER_NAME
+			FROM (SELECT * FROM TBL_BOARD WHERE NUM > 0 ORDER BY "DATE" DESC) B JOIN TBL_COM_SCRAP L 
+			ON B.NUM = L.BOARD_NUM WHERE ROWNUM BETWEEN 1 AND 20 AND L.USER_ID = #{user_id} AND L.LIKECHECK = 1
+		]]>
+		</select>
+		
 		<select id="scrollDown" parameterType="_int" resultType="comVO">
 		<![CDATA[
 			SELECT
@@ -61,6 +92,38 @@
 			"FILE",
 			USER_NAME
 			FROM TBL_BOARD WHERE NUM <= #{num} AND NUM > #{num}-20 ORDER BY "DATE" DESC
+		]]>
+		</select>
+		
+		<select id="scrollDownMy" parameterType="map" resultType="comVO">
+		<![CDATA[
+			SELECT
+			NUM, 
+			USER_ID, 
+			CONTENT, 
+			LIKE_CNT, 
+			"DATE", 
+			"TYPE", 
+			"FILE",
+			USER_NAME
+			FROM TBL_BOARD WHERE NUM <= #{num} AND NUM > #{num}-20 AND USER_ID = #{user_id} ORDER BY "DATE" DESC
+		]]>
+		</select>
+		
+		<select id="scrollDownMyScrap" parameterType="map" resultType="comVO">
+		<![CDATA[
+			SELECT
+			NUM, 
+			USER_ID, 
+			CONTENT, 
+			LIKE_CNT, 
+			"DATE", 
+			"TYPE", 
+			"FILE",
+			USER_NAME
+			FROM TBL_BOARD B JOIN TBL_COM_SCRAP L 
+			ON B.NUM = L.BOARD_NUM
+			WHERE NUM <= #{num} AND NUM > #{num}-20 AND L.USER_ID = #{user_id} AND L.LIKECHECK = 1 ORDER BY "DATE" DESC
 		]]>
 		</select>
 		

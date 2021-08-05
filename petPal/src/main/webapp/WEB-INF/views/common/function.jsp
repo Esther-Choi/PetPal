@@ -15,7 +15,7 @@
 	뒤로가기
 	*/
 	$.fnBack = function() {
-		window.history.back();
+		location.href = document.referrer;
 	}
 
 </script>

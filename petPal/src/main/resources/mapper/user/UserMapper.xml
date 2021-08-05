@@ -34,6 +34,43 @@
 		
 	</insert>
 	
+	<update id="editUser" parameterType="userVO">
+		UPDATE TBL_USER
+		SET USER_GENDER = #{user_gender}, 
+		USER_BIRTH = #{user_birth}, 
+		WALK_DAY = #{walk_day}, 
+		WALK_TIME = #{walk_time}, 
+		WALK_HOUR = #{walk_hour}, 
+		WALK_MINUTE = #{walk_minute}, 
+		WALK_PLACE1 = #{walk_place1}, 
+		WALK_PLACE2 = #{walk_place2}, 
+		WALK_STYLE = #{walk_style}
+		WHERE USER_ID = #{user_id}
+	</update>
+	
+	<update id="editPet" parameterType="petVO">
+		UPDATE TBL_PET
+		SET PET_PHOTO = #{pet_photo}, 
+		PET_PHOTOTHUMB = #{pet_photothumb}, 
+		PET_NAME= #{pet_name}, 
+		PET_AGE = #{pet_age}, 
+		PET_GENDER = #{pet_gender}, 
+		PET_BREED = #{pet_breed}, 
+		ADDRESS = #{address}, 
+		PET_WEIGHT = #{pet_weight}, 
+		SURGERY = #{surgery}, 
+		LIKES = #{likes}, 
+		DISLIKES = #{dislikes}, 
+		CHARACTER1 = #{character1},
+		CHARACTER2 = #{character2},
+		CHARACTER3 = #{character3},
+		TIP = #{tip},
+		SI = #{si},
+		GUNGU = #{gungu},
+		DONG = #{dong}
+		WHERE USER_ID = #{user_id}
+	</update>
+	
 	<insert id="insertPet" parameterType="petVO">
 		INSERT INTO HR.TBL_PET
 		(

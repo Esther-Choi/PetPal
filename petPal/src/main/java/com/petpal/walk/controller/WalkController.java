@@ -130,6 +130,7 @@ public class WalkController {
 	@RequestMapping(value="delete.do", method = RequestMethod.GET)
 	public String deleteWalk(
 			@RequestParam("num") int num,
+			@RequestParam("prev") String prev,
 			HttpServletResponse response
 			) throws Exception {
 		
@@ -137,7 +138,13 @@ public class WalkController {
 		try {
 			
 			if(walkService.deleteWalk(num)) {
-				return "redirect:/walk/list.do";
+				System.out.println(prev);
+				if(prev.equals("my")) {
+					return "redirect:/mypage/mywalk.do";
+				}else {
+					
+					return "redirect:/walk/list.do";
+				}
 			}
 			
 		} catch (Exception e) {
@@ -228,7 +235,7 @@ public class WalkController {
 	}
 	
 	@RequestMapping(value = "view.do", method = RequestMethod.GET)
-	public String getWalk(@RequestParam("num") int num, Model model, HttpSession session) throws Exception {
+	public String getWalk(@RequestParam("num") int num, @RequestParam("prev") String prev, Model model, HttpSession session) throws Exception {
 		LOGGER.info("getWalk");
 		
 		String user_id = (String)session.getAttribute("user_id");
@@ -276,6 +283,7 @@ public class WalkController {
 		model.addAttribute("userVO", user);
 		model.addAttribute("address", userService.getPet(walk.getUser_id()).getAddress());
 		model.addAttribute("user_id", user_id);
+		model.addAttribute("prev", prev);
 		
 		
 		return "/walk/view";

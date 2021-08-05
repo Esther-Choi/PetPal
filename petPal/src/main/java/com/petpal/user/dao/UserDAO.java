@@ -42,5 +42,13 @@ public class UserDAO {
 	public PetVO getPet(String user_id) {
 		return sql.selectOne(namespace + ".getPet", user_id);
 	}
+	
+	public int editUser(UserVO userVO) {
+		return sql.update(namespace + ".editUser", userVO);
+	}
+	
+	public int editPet(PetVO petVO) {
+		return sql.update(namespace + ".editPet", petVO);
+	}
 
 }
