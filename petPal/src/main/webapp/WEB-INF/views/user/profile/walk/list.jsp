@@ -5,66 +5,8 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/template/header.jsp"%>
+<link rel="stylesheet" href="${path}/resources/assets/css/mypage.css?after" />
 </head>
-<body id="body">
-	<%@ include file="/WEB-INF/views/template/top.jsp"%>
-	<!-- Wrapper-->
-	<div id="wrapper">
-		<div id="bar">
-			<div
-				style="display: flex; align-items: center; position: relative; z-index: 4;">
-				<a href="javascript:void(0);" style="margin-right: 5px;"
-					onclick="show()"><span class="bold">용현5동</span></a> <i
-					class="fas fa-chevron-down" style="font-size: 10px;"></i>
-				<div class="toolip">
-					<p id="address">용현5동</p>
-					<p id="set">내 동네 설정하기</p>
-				</div>
-			</div>
-			<div
-				style="width: 90px; display: flex; justify-content: space-between;">
-				<a href=""><i class="fas fa-search" style="font-size: 18px;"></i></a>
-				<a href=""><i class="fas fa-sliders-h"></i></a> <a href=""><i
-					class="far fa-bell"></i></a>
-			</div>
-		</div>
-		<div id="list">
-			<ul class="listToChange">
-				<c:forEach items="${list}" var="walkVO">
-					<li id="list-content" class="scrolling" num="${walkVO.num}"><a
-						href="/walk/view.do?num=${walkVO.num}&&prev="><img
-							src="${walkVO.thumb}" alt="">
-							<div id="content">
-								<span id="title">${walkVO.title}</span>
-								<ul>
-									<li><span>${walkVO.breed}</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>${walkVO.age}살</span></li>
-									<li><span>&#183;</span></li>
-									<li><span>${walkVO.date}</span></li>
-								</ul>
-								<span id="location">${walkVO.location}</span>
-							</div></a></li>
-				</c:forEach>
-
-			</ul>
-		</div>
-		<a href="/walk/form.do" id="write"> <i class="fas fa-pencil-alt"></i>
-		</a>
-		<!-- Nav -->
-		<nav id="nav">
-			<a href="javascript:void(0)" onclick="$.fnGoTop('list')" class="icon solid"
-				style="opacity: 1 !important;"><i class="fas fa-paw"></i>
-			<p>홈</p></a> <a href="/com/list.do" class="icon solid"><i
-				class="fas fa-bullhorn"></i>
-			<p>커뮤니티</p></a> <a href="#contact" class="icon solid"><i
-				class="far fa-comment-alt"></i>
-			<p>채팅</p></a> <a href="/mypage/main.do" class="icon brands"><i
-				class="far fa-user"></i>
-			<p>나의 펫팔</p></a>
-		</nav>
-	</div>
-</body>
 <script>
 		var toolip = document.getElementsByClassName('toolip');
 		var body = document.getElementById('body');
@@ -85,12 +27,13 @@
 				if(scrollTop + height >= scrollHeight){
 				
 					var lastnum = $(".scrolling:last").attr("num");
+					var user_id = $("input[name='user_id']").val();
 					// ajax를 이용해서 현재 뿌려진 게시글의 마지막 num을 서버로 보내어 그 다음 20개의 게시물 데이터를 받아온다.
 					$.ajax({
 						type : 'post',
-						url : 'scrollDown.do',
+						url : '/user/walk/scrollDownMyWalk.do',
 						dataType : 'json', //서버로부터 되돌려받는 데이터 타입
-						data : "num="+ lastnum,
+						data : {"num":lastnum, "user_id":user_id},
 						success : function(data){
 							var str = "";
 							
@@ -98,7 +41,7 @@
 								$(data).each(
 										function(){
 											str += "<li id='list-content' class='scrolling' num='"+this.num+"'>"
-												+	"<a href='/walk/view.do?num="+this.num+"&&prev='><img src='"+this.thumb+"' alt=''>"
+												+	"<a href='/walk/view.do?num="+this.num+"'><img src='"+this.thumb+"' alt=''>"
 												+	"<div id='content'>"
 												+	"<span id = 'title'>"+this.title+"</span>"
 												+	"<ul>"
@@ -144,13 +87,49 @@
 		
 		
 	</script>
+<body id="body">
+<%@ include file="/WEB-INF/views/template/top.jsp"%>
+		<!-- <div id="bg"></div> -->
+		<!-- Wrapper-->
+			<div id="wrapper">	
+				<div id="bar" style="background-color: white; text-align: center;">
+					<div style="display: flex; align-items: center; position: relative; z-index: 4; width: 100%;">
+						<a href="javascript:history.back();"><i class="fas fa-arrow-left"></i></a>
+                        <div class="title" style="width: 90%; font-size: 0.9em; color: black;">
+                            <span>${name}의 산책</span>
+                        </div>
+					</div>					
+				</div>
+					<c:choose>
+						<c:when test="${not empty list}">
+						<div id="list" style="height: calc(100vh - 4.4em)">
+							<ul class="listToChange">
+							<c:forEach items="${list}" var="walk">
+								<li id="list-content" class="scrolling" num="${walk.num}">
+								<input type="hidden" name= "user_id" value="${walk.user_id}">
+									<a href="/walk/view.do?num=${walk.num}&&prev="><img src="${walk.thumb}" alt="">
+									<div id="content">
+										<span id="title">${walk.title}</span>
+										<ul>
+											<li><span>${walk.breed}</span></li>
+											<li><span>&#183;</span></li>
+											<li><span>${walk.age}살</span></li>
+											<li><span>&#183;</span></li>
+											<li><span>${walk.date}</span></li>
+										</ul>
+										<span id="location">${walk.location}</span>
+									</div></a>
+								</li>
+							</c:forEach>
+							</ul>
+						</div>
+						</c:when>
+						<c:otherwise>
+							<div id="nolist">
+								<p>아직 작성한 게시글이 없어요.</p>
+							</div> 
+						</c:otherwise>
+					</c:choose>
+			</div>
+	</body>
 </html>
-
-
-
-
-
-
-
-
-

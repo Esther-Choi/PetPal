@@ -1,9 +1,12 @@
 package com.petpal.user.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.petpal.user.vo.FollowVO;
 import com.petpal.user.vo.PetVO;
 import com.petpal.user.vo.UserVO;
 
@@ -49,6 +52,26 @@ public class UserDAO {
 	
 	public int editPet(PetVO petVO) {
 		return sql.update(namespace + ".editPet", petVO);
+	}
+	
+	public int insertFollow(FollowVO followVO) {
+		return sql.insert(namespace + ".insertFollow", followVO);
+	}
+	
+	public int deleteFollow(FollowVO followVO) {
+		return sql.delete(namespace + ".deleteFollow", followVO);
+	}
+	
+	public int checkFollow(FollowVO followVO) {
+		return sql.selectOne(namespace + ".checkFollow", followVO);
+	}
+
+	public int selectFollowCnt(String user_id) {
+		return sql.selectOne(namespace + ".selectFollowCnt", user_id);
+	}
+	
+	public List<String> selectFollowList(String user_id){
+		return sql.selectList(namespace + ".selectFollowList", user_id);
 	}
 
 }

@@ -14,6 +14,7 @@
  	<typeAliases>
     
 		<typeAlias type="com.petpal.user.vo.UserVO" alias="userVO"/>
+		<typeAlias type="com.petpal.user.vo.FollowVO" alias="followVO"/>
 		<typeAlias type="com.petpal.user.vo.PetVO" alias="petVO"/>
 		<typeAlias type="com.petpal.walk.vo.WalkVO" alias="walkVO"/>
 		<typeAlias type="com.petpal.walk.vo.WalkLikeVO" alias="walkLikeVO"/>

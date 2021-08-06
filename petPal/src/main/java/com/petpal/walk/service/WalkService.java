@@ -52,9 +52,9 @@ public class WalkService {
 		return false;
 	}
 	
-	public boolean updateLike(WalkLikeVO walkLikeVO) {
+	public boolean deleteLike(WalkLikeVO walkLikeVO) {
 		
-		if(walkDAO.updateLike(walkLikeVO) == 1) {
+		if(walkDAO.deleteLike(walkLikeVO) == 1) {
 			return true;
 		}
 		
@@ -87,10 +87,6 @@ public class WalkService {
 	
 	public WalkVO getWalk(int num) {
 		return walkDAO.getWalk(num);
-	}
-	
-	public int searchWalkLike(WalkLikeVO vo) {
-		return walkDAO.searchWalkLike(vo);
 	}
 	
 	public Integer getWalkLike(HashMap<String, Object> map) {

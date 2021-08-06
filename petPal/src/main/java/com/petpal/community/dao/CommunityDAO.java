@@ -75,10 +75,6 @@ public class CommunityDAO {
 		return sql.insert(namespace + ".insertLike", comLikeVO);
 	}
 	
-	//좋아요 기록 찾기
-	public int searchComLike(ComLikeVO comLikeVO) {
-		return sql.selectOne(namespace + ".searchComLike", comLikeVO);
-	}
 	
 	//좋아요 여부 가져오기
 	public Integer getComLike(HashMap<String, Object> map) {
@@ -86,8 +82,8 @@ public class CommunityDAO {
 	}
 	
 	//좋아요 업데이트
-	public int updateLike(ComLikeVO comLikeVO) {
-		return sql.insert(namespace + ".updateLike", comLikeVO);
+	public int deleteLike(ComLikeVO comLikeVO) {
+		return sql.delete(namespace + ".deleteLike", comLikeVO);
 	}
 	
 	
@@ -96,19 +92,14 @@ public class CommunityDAO {
 		return sql.insert(namespace + ".insertScrap", comScrapVO);
 	}
 	
-	//스크랩 기록 찾기
-	public int searchComScrap(ComScrapVO comScrapVO) {
-		return sql.selectOne(namespace + ".searchComScrap", comScrapVO);
-	}
-	
 	//스크랩 여부 가져오기
 	public Integer getComScrap(HashMap<String, Object> map) {
 		return sql.selectOne(namespace + ".getComScrap", map);
 	}
 	
 	//스크랩 업데이트
-	public int updateScrap(ComScrapVO comScrapVO) {
-		return sql.insert(namespace + ".updateScrap", comScrapVO);
+	public int deleteScrap(ComScrapVO comScrapVO) {
+		return sql.delete(namespace + ".deleteScrap", comScrapVO);
 	}
 	
 

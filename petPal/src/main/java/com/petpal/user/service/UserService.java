@@ -1,11 +1,12 @@
 package com.petpal.user.service;
 
-import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.petpal.user.dao.UserDAO;
+import com.petpal.user.vo.FollowVO;
 import com.petpal.user.vo.PetVO;
 import com.petpal.user.vo.UserVO;
 
@@ -70,6 +71,40 @@ public class UserService {
 	
 	public PetVO getPet(String user_id) {
 		return userDAO.getPet(user_id);
+	}
+	
+	public boolean insertFollow(FollowVO followVO) throws Exception{
+		
+		if(userDAO.insertFollow(followVO) == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public boolean deleteFollow(FollowVO followVO) throws Exception{
+		
+		if(userDAO.deleteFollow(followVO) == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public boolean checkFollow(FollowVO followVO) {
+		if(userDAO.checkFollow(followVO) == 1) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public int selectFollowCnt(String user_id) {
+		return userDAO.selectFollowCnt(user_id);
+	}
+	
+	public List<String> selectFollowList(String user_id){
+		return userDAO.selectFollowList(user_id);
 	}
 
 }

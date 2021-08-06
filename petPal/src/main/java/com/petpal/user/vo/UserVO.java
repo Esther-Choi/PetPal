@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
-public class UserVO {
+public class UserVO extends PetVO{
 	
 	private String user_id;
 	private String user_pw;

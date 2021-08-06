@@ -137,5 +137,36 @@
 	<select id="getPet" parameterType="string" resultType="petVO">
 		SELECT * FROM TBL_PET WHERE USER_ID = #{user_id}
 	</select>
+	
+	<insert id="insertFollow" parameterType="followVO">
+		INSERT INTO TBL_PET_FOLLOW
+		(
+		NUM,
+		USER_ID,
+		FOLLOW_ID
+		)
+		VALUES(
+		SEQ_PET_FOLLOW.NEXTVAL, 
+		#{user_id}, 
+		#{follow_id}
+		)		
+	</insert>
+	
+	<delete id="deleteFollow" parameterType="followVO">
+		DELETE FROM TBL_PET_FOLLOW
+		WHERE USER_ID = #{user_id} AND FOLLOW_ID = #{follow_id}		
+	</delete>
+	
+	<select id="checkFollow" parameterType="followVO" resultType="_int">
+		SELECT COUNT(*) FROM TBL_PET_FOLLOW WHERE USER_ID = #{user_id} AND FOLLOW_ID = #{follow_id}
+	</select>
+	
+	<select id="selectFollowCnt" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM TBL_PET_FOLLOW WHERE USER_ID = #{user_id}
+	</select>
+	
+	<select id="selectFollowList" parameterType="string" resultType="string">
+		SELECT FOLLOW_ID FROM TBL_PET_FOLLOW WHERE USER_ID = #{user_id}
+	</select>
 
 </mapper>

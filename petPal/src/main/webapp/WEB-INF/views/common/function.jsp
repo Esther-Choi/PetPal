@@ -17,5 +17,6 @@
 	$.fnBack = function() {
 		location.href = document.referrer;
 	}
+	
 
 </script>

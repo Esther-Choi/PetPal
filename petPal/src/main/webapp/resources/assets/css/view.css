@@ -149,7 +149,7 @@ body {
     padding-right: 2em;
 }
 
-.nav #viewProfile , .nav #chat{
+.nav #viewProfile , .nav #follow , .nav #chat{
     font-size: 0.78em;
     width: 100px;
     text-decoration: none;

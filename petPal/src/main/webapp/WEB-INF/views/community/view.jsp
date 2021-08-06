@@ -188,7 +188,7 @@
 		<div id="bar" style="background-color: white;">
 			<div
 				style="display: flex; align-items: center; position: relative; z-index: 4;">
-				<a href="javascript:void(0)" onclick="$.fnBack()"><i class="fas fa-arrow-left"></i></a>
+				<a href="javascript:history.back();"><i class="fas fa-arrow-left"></i></a>
 			</div>
 			<div
 				style="width: 50px; display: flex; justify-content:flex-end; align-content: center;  align-items: center;">

@@ -252,7 +252,6 @@ public class WalkController {
 		
 		map.put("user_id", user_id);
 		map.put("board_num", num);
-		System.out.println(likeService.getWalkLike(map) );
 		if(likeService.getWalkLike(map) != null) {
 			model.addAttribute("check", likeService.getWalkLike(map));
 		}
@@ -306,11 +305,10 @@ public class WalkController {
 		try {
 			walkLikeVO.setUser_id(user_id);
 			walkLikeVO.setBoard_num(num);
-			walkLikeVO.setLikecheck(check);
-			if(likeService.searchWalkLike(walkLikeVO) == 1) {
-				likeService.updateLike(walkLikeVO);
-			}else {				
+			if(check == 1) {
 				likeService.insertLike(walkLikeVO);
+			}else {
+				likeService.deleteLike(walkLikeVO);
 			}
 			result = "success";
 		} catch (Exception e) {

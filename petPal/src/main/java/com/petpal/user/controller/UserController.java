@@ -4,6 +4,9 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Resource;
@@ -26,10 +29,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.petpal.community.service.CommunityService;
+import com.petpal.community.vo.CommunityVO;
 import com.petpal.user.service.UserService;
+import com.petpal.user.vo.FollowVO;
 import com.petpal.user.vo.PetVO;
 import com.petpal.user.vo.UserVO;
 import com.petpal.utils.UploadFileUtils;
+import com.petpal.walk.service.WalkService;
+import com.petpal.walk.vo.WalkVO;
 
 @Controller
 @RequestMapping("/user/*")
@@ -39,6 +47,12 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private WalkService walkService;
+	
+	@Autowired
+	private CommunityService comService;
 	
 	@Inject
 	BCryptPasswordEncoder pwdEncoder;
@@ -181,7 +195,31 @@ public class UserController {
 		return "error";
 	}
 	
-	@RequestMapping(value = "profile.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/profile/main.do")
+	public String main(Model model, @RequestParam("user_id") String user_id, HttpSession session) throws Exception{
+		
+		LOGGER.info("profile page");
+		
+		String id = (String)session.getAttribute("user_id");
+		String name = userService.getUser(user_id).getUser_name();
+		String thumb = userService.getPet(user_id).getPet_photothumb();
+		
+		FollowVO followVO = new FollowVO();
+		followVO.setFollow_id(user_id);
+		followVO.setUser_id(id);
+		
+		boolean check = userService.checkFollow(followVO);
+		
+		model.addAttribute("name", name);
+		model.addAttribute("thumb", thumb);
+		model.addAttribute("user_id", user_id);
+		model.addAttribute("check", check);
+		
+		
+		return "/user/profile/main";
+	}
+	
+	@RequestMapping(value = "/profile/view.do", method = RequestMethod.GET)
 	public String profile(@RequestParam("user_id") String user_id, Model model) throws Exception {
 		
 		UserVO user = userService.getUser(user_id);
@@ -200,7 +238,278 @@ public class UserController {
 		model.addAttribute("userVO", user);
 		model.addAttribute("petVO", pet);
 		
-		return "/user/profile";
+		return "/user/profile/view";
+	}
+	
+	@RequestMapping(value="/walk/list.do")
+	public String myWlalkList(
+			HttpSession session, 
+			@RequestParam(required = false) String user_id,
+			Model model
+			) {
+		LOGGER.info("myWalkList");
+		
+		String url = "/user/profile/walk/list";
+		String name = "";
+		
+		if(user_id == null) {
+			
+			user_id = (String)session.getAttribute("user_id");
+			url = "/mypage/walk/list";
+		}else {
+			
+			name = userService.getUser(user_id).getUser_name();
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		List<WalkVO> lists = walkService.selectMyWalkList(user_id);
+		if(user_id == null) {
+			LOGGER.info("no session");
+			return "redirect:/user/main.do";
+		}
+		LOGGER.info("selectMyWalkList");
+		try {
+			
+			if(lists.size() > 0 ) {
+				for (int i = 0; i < lists.size(); i++) {
+					Date startDate = new Date();
+					Date endDate = sdf.parse(lists.get(i).getDate());
+					long diffDay = (endDate.getTime() - startDate.getTime()) / (24*60*60*1000);
+					if(diffDay == 0) {
+						if(endDate.getDay() != startDate.getDay()) {
+							lists.get(i).setDate("내일");
+						}else {
+							lists.get(i).setDate("오늘");
+						}
+					}else if(diffDay == 1){
+						lists.get(i).setDate("내일");
+					}else {
+						SimpleDateFormat sdf2 = new SimpleDateFormat("MM월 dd일");
+						lists.get(i).setDate(sdf2.format(endDate));
+					}
+					
+				}
+			}
+			model.addAttribute("list", lists);
+			model.addAttribute("name", name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return url;
+	}
+	
+	@RequestMapping(value="/community/list.do")
+	public String myComList(
+			HttpSession session, 
+			@RequestParam(required = false) String user_id,
+			Model model
+			) {
+		LOGGER.info("myWalkList");
+		
+		String url = "/user/profile/community/list";
+		String name ="";
+		
+		if(user_id == null) {
+			
+			user_id = (String)session.getAttribute("user_id");
+			url = "/mypage/community/list";
+		}else {
+			
+			name = userService.getUser(user_id).getUser_name();
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		List<CommunityVO> lists = comService.selectMyComList(user_id);
+		if(user_id == null) {
+			LOGGER.info("no session");
+			return "redirect:/user/main.do";
+		}
+		LOGGER.info("selectMyComList");
+		try {
+			
+			if(lists.size() > 0 ) {
+				for (int i = 0; i < lists.size(); i++) {
+					
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					
+					map.put("user_id", user_id);
+					map.put("board_num", lists.get(i).getNum());
+					
+					if(comService.getComLike(map) != null) {
+						
+						if(comService.getComLike(map) == 1) {
+							lists.get(i).setLikecheck(1);
+						}
+					}
+					
+					Date startDate = new Date();
+					Date endDate = sdf.parse(lists.get(i).getDate());
+					long diffDay = (endDate.getTime() - startDate.getTime()) / (24*60*60*1000);
+					if(diffDay == 0) {
+						if(endDate.getDay() != startDate.getDay()) {
+							lists.get(i).setDate("내일");
+						}else {
+							lists.get(i).setDate("오늘");
+						}
+					}else if(diffDay == 1){
+						lists.get(i).setDate("내일");
+					}else {
+						SimpleDateFormat sdf2 = new SimpleDateFormat("MM월 dd일");
+						lists.get(i).setDate(sdf2.format(endDate));
+					}
+					
+				}
+			}
+			model.addAttribute("list", lists);
+			model.addAttribute("name", name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return url;
+	}
+	
+	@RequestMapping(value = "/community/scrollDownMyCom.do", method = RequestMethod.POST)
+	@ResponseBody
+	public List<CommunityVO> scrollDownMy(@RequestParam("num") int num, @RequestParam(required = false) String user_id, HttpSession session){
+		LOGGER.info("scrollDownMy");
+		num--;
+		
+		if(user_id == null) {
+			
+			user_id = (String)session.getAttribute("user_id");
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		HashMap<String, Object> maps = new HashMap<String, Object>();
+		maps.put("user_id", user_id);
+		maps.put("num", num);
+		List<CommunityVO> lists =  comService.scrollDownMy(maps);
+		
+		try {
+			
+			if(lists.size() > 0 ) {
+				for (int i = 0; i < lists.size(); i++) {
+					
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					
+					map.put("user_id", user_id);
+					map.put("board_num", lists.get(i).getNum());
+					
+					if(comService.getComLike(map) != null) {
+						
+						if(comService.getComLike(map) == 1) {
+							lists.get(i).setLikecheck(1);
+						}
+					}
+					
+					Date startDate = new Date();
+					Date endDate = sdf.parse(lists.get(i).getDate());
+					
+					long diffDay = (startDate.getTime() - endDate.getTime()) / (24*60*60*1000);
+					if(diffDay > 0) {
+						lists.get(i).setDate(diffDay+"일 전");
+					}else {
+						endDate = sdf.parse(lists.get(i).getDate());
+						diffDay = (startDate.getTime() - endDate.getTime()) / (60*1000);
+						if(diffDay > 60) {
+							lists.get(i).setDate((diffDay/60)+"시간 전");
+						}else if(diffDay == 0){
+							lists.get(i).setDate("방금 전");
+						}else {
+							lists.get(i).setDate((diffDay)+"분 전");
+						}
+					}
+					
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return lists;
+	}
+	
+	@RequestMapping(value = "/walk/scrollDownMyWalk.do", method = RequestMethod.POST)
+	@ResponseBody
+	public List<WalkVO> scrollDown(@RequestParam("num") int num, @RequestParam(required = false) String user_id, HttpSession session){
+		LOGGER.info("scrollDown");
+		
+		num--;
+		if(user_id == null) {
+			
+			user_id = (String)session.getAttribute("user_id");
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		HashMap<String, Object> maps = new HashMap<String, Object>();
+		maps.put("user_id", user_id);
+		maps.put("num", num);
+		List<WalkVO> lists = walkService.scrollDownMy(maps);
+		try {
+			
+			if(lists.size() > 0 ) {
+				for (int i = 0; i < lists.size(); i++) {
+					
+					Date startDate = new Date();
+					Date endDate = sdf.parse(lists.get(i).getDate());
+					long diffDay = (endDate.getTime() - startDate.getTime()) / (24*60*60*1000);
+					if(diffDay == 0) {
+						if(endDate.getDay() != startDate.getDay()) {
+							lists.get(i).setDate("내일");
+						}else {
+							lists.get(i).setDate("오늘");
+						}
+					}else if(diffDay == 1){
+						lists.get(i).setDate("내일");
+					}else {
+						SimpleDateFormat sdf2 = new SimpleDateFormat("MM월 dd일");
+						lists.get(i).setDate(sdf2.format(endDate));
+					}
+					
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return lists;
+	}
+	
+	@RequestMapping(value="follow.do")
+	@ResponseBody
+	public String insertFollow(@RequestParam("follow_id") String follow_id, @RequestParam("check") int check, HttpSession session) {
+		
+		LOGGER.info("insert follow");
+		String user_id = (String)session.getAttribute("user_id");
+		String result = "";
+		try {
+			FollowVO followVO = new FollowVO();
+			followVO.setFollow_id(follow_id);
+			followVO.setUser_id(user_id);
+			
+			if(check == 1) {
+				if(userService.insertFollow(followVO)) {
+					result = "success";
+				}else {
+					result = "fail";
+				}
+			}else {
+				if(userService.deleteFollow(followVO)) {
+					result = "success";
+				}else {
+					result = "fail";
+				}
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
 }

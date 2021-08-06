@@ -92,17 +92,13 @@ public class CommunityService {
 		return false;
 	}
 	
-	public boolean updateLike(ComLikeVO comLikeVO) {
+	public boolean deleteLike(ComLikeVO comLikeVO) {
 		
-		if(comDAO.updateLike(comLikeVO) == 1) {
+		if(comDAO.deleteLike(comLikeVO) == 1) {
 			return true;
 		}
 		
 		return false;
-	}
-	
-	public int searchComLike(ComLikeVO comLikeVO) {
-		return comDAO.searchComLike(comLikeVO);
 	}
 	
 	public Integer getComLike(HashMap<String, Object> map) {
@@ -119,17 +115,13 @@ public class CommunityService {
 		return false;
 	}
 	
-	public boolean updateScrap(ComScrapVO comScrapVO) {
+	public boolean deleteScrap(ComScrapVO comScrapVO) {
 		
-		if(comDAO.updateScrap(comScrapVO) == 1) {
+		if(comDAO.deleteScrap(comScrapVO) == 1) {
 			return true;
 		}
 		
 		return false;
-	}
-	
-	public int searchComScrap(ComScrapVO comScrapVO) {
-		return comDAO.searchComScrap(comScrapVO);
 	}
 	
 	public Integer getComScrap(HashMap<String, Object> map) {

@@ -448,10 +448,10 @@ public class CommunityController {
 			comLikeVO.setUser_id(user_id);
 			comLikeVO.setBoard_num(num);
 			comLikeVO.setLikecheck(check);
-			if(comService.searchComLike(comLikeVO) == 1) {
-				comService.updateLike(comLikeVO);
-			}else {				
+			if(check == 1) {
 				comService.insertLike(comLikeVO);
+			}else {
+				comService.deleteLike(comLikeVO);
 			}
 			result = "success";
 		} catch (Exception e) {
@@ -480,10 +480,10 @@ public class CommunityController {
 			comScrapVO.setUser_id(user_id);
 			comScrapVO.setBoard_num(num);
 			comScrapVO.setLikecheck(check);
-			if(comService.searchComScrap(comScrapVO) == 1) {
-				comService.updateScrap(comScrapVO);
-			}else {				
+			if(check == 1) {
 				comService.insertScrap(comScrapVO);
+			}else {
+				comService.deleteScrap(comScrapVO);
 			}
 			result = "success";
 		} catch (Exception e) {

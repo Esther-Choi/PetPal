@@ -134,7 +134,7 @@
 		]]>
 		</select>
 		
-		<select id="scrollDownMy" parameterType="_int" resultType="walkVO">
+		<select id="scrollDownMy" parameterType="map" resultType="walkVO">
 		<![CDATA[
 			SELECT
 			NUM, 
@@ -154,7 +154,7 @@
 		]]>
 		</select>
 		
-		<select id="scrollDownMyScrap" parameterType="_int" resultType="walkVO">
+		<select id="scrollDownMyScrap" parameterType="map" resultType="walkVO">
 		<![CDATA[
 			SELECT
 			NUM, 
@@ -216,10 +216,9 @@
 			SELECT LIKECHECK FROM TBL_WALK_LIKE WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
 		</select>
 		
-		<update id="updateLike" parameterType="walkLikeVO">
-			UPDATE TBL_WALK_LIKE
-			SET LIKECHECK = #{likecheck}
+		<delete id="deleteLike" parameterType="walkLikeVO">
+			DELETE FROM TBL_WALK_LIKE
 			WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
-		</update>
+		</delete>
 	
 	</mapper>

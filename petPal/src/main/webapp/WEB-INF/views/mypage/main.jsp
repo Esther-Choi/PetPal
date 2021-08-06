@@ -27,7 +27,7 @@
 				<div class="mypage">
 					<ul>
 						<li>
-							<a href="/mypage/walk/list.do">
+							<a href="/user/walk/list.do">
 								<div>
 									<i class="fas fa-paw color"></i>
 									<span>나의 산책</span>
@@ -38,7 +38,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="/mypage/community/list.do">
+							<a href="/user/community/list.do">
 								<div>
 									<i class="fas fa-pen-alt color"></i>
 									<span>나의 커뮤니티</span>
@@ -60,13 +60,13 @@
 							</a>
 						</li>
 						<li>
-							<a href="petpal.html">
+							<a href="/mypage/petfollow/list.do">
 								<div>
 									<i class="fas fa-dog color"></i>
 									<span>펫팔 관리</span>
 								</div>
 								<div>
-									<span id="count">0</span>
+									<span id="count">${followCnt}</span>
 									<i class="fas fa-chevron-right"></i>
 								</div>
 							</a>

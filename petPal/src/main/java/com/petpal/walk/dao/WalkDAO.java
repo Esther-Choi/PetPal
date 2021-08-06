@@ -62,16 +62,12 @@ public class WalkDAO {
 		return sql.insert(namespace + ".insertLike", walkLikeVO);
 	}
 	
-	public int searchWalkLike(WalkLikeVO walkLikeVO) {
-		return sql.selectOne(namespace + ".searchWalkLike", walkLikeVO);
-	}
-	
 	public Integer getWalkLike(HashMap<String, Object> map) {
 		return sql.selectOne(namespace + ".getWalkLike", map);
 	}
 	
-	public int updateLike(WalkLikeVO walkLikeVO) {
-		return sql.insert(namespace + ".updateLike", walkLikeVO);
+	public int deleteLike(WalkLikeVO walkLikeVO) {
+		return sql.delete(namespace + ".deleteLike", walkLikeVO);
 	}
 
 }

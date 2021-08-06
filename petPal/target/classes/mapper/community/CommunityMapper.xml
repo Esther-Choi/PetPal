@@ -178,17 +178,12 @@
 			)
 		</insert>
 		
-		<select id="searchComLike" parameterType="comLikeVO" resultType="_int">
-			SELECT COUNT(*) FROM TBL_COM_LIKE WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
-		</select>
-		
 		<select id="getComLike" parameterType="map" resultType="Integer">
 			SELECT LIKECHECK FROM TBL_COM_LIKE WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
 		</select>
 		
-		<update id="updateLike" parameterType="comLikeVO">
-			UPDATE TBL_COM_LIKE
-			SET LIKECHECK = #{likecheck}
+		<update id="deleteLike" parameterType="comLikeVO">
+			DELETE FROM TBL_COM_LIKE
 			WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
 		</update>
 		
@@ -206,17 +201,12 @@
 			)
 		</insert>
 		
-		<select id="searchComScrap" parameterType="comScrapVO" resultType="_int">
-			SELECT COUNT(*) FROM TBL_COM_SCRAP WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
-		</select>
-		
 		<select id="getComScrap" parameterType="map" resultType="Integer">
 			SELECT LIKECHECK FROM TBL_COM_SCRAP WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
 		</select>
 		
-		<update id="updateScrap" parameterType="comScrapVO">
-			UPDATE TBL_COM_SCRAP
-			SET LIKECHECK = #{likecheck}
+		<update id="deleteScrap" parameterType="comScrapVO">
+			DELETE FROM TBL_COM_SCRAP
 			WHERE BOARD_NUM = #{board_num} AND USER_ID = #{user_id}
 		</update>
 	

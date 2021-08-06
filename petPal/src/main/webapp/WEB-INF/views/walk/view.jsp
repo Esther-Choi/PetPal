@@ -73,7 +73,7 @@
 			style="border-bottom: none; padding-top: 2px; padding-bottom: 10px; margin-bottom: 0;">
 			<div
 				style="display: flex; align-items: center; position: relative; z-index: 4; justify-content: space-between; width: 100%;">
-				<a href="javascript:void(0)" onclick="$.fnBack()"><i
+				<a href="javascript:history.back();"><i
 					class="fas fa-arrow-left"></i></a>
 				<div
 				style="width: 50px; display: flex; justify-content:flex-end; align-content: center;  align-items: center;">
@@ -104,6 +104,7 @@
 				</ul>
 				<p id="cont">${walkVO.content}</p>
 			</div>
+			<a href="/user/profile/main.do?user_id=${walkVO.user_id}" style="text-decoration: none;">
 			<div id="profile">
 				<img src="${walkVO.thumb}" alt="">
 				<div id="info">
@@ -117,20 +118,31 @@
 					</div>
 				</div>
 			</div>
+			</a>
 		</div>
 		<!-- Nav -->
-		<nav id="nav" class="nav">
-			<button id="heart" onclick="$.fnLike('${walkVO.num}')">
-				<i class="far fa-heart like" id="color"></i>
-			</button>
-			<div class="btn-box">
-				<a href="/user/profile.do?user_id=${walkVO.user_id}"
-					id="viewProfile">프로필 보기</a>
-			</div>
-			<div class="btn-box">
-				<a href="" id="chat">채팅하기</a>
-			</div>
-		</nav>
+		<c:if test="${user_id ne walkVO.user_id}">
+			<nav id="nav" class="nav">
+				<button id="heart" onclick="$.fnLike('${walkVO.num}')">
+					<i class="far fa-heart like" id="color"></i>
+				</button>
+				<div class="btn-box">
+					<a href="/user/profile/main.do?user_id=${walkVO.user_id}"
+						id="viewProfile">프로필 보기</a>
+				</div>
+				<div class="btn-box">
+					<a href="" id="chat">채팅하기</a>
+				</div>
+			</nav>
+		</c:if>
+		<c:if test="${user_id eq walkVO.user_id}">
+			<nav id="nav" class="nav" style="padding-right: 0">
+				<div class="btn-box" style="width: 90%">
+					<a href="/mypage/main.do"
+						id="viewProfile">프로필 보기</a>
+				</div>
+			</nav>
+		</c:if>
 	</div>
 </body>
 </html>
